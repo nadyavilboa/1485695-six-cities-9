@@ -1,5 +1,6 @@
 import Logo from '../logo/logo';
-import Nav from '../nav/nav';
+import NavContainer from '../nav-container/nav-container';
+import { AuthorizationStatus } from '../../const/routing';
 
 function Header(): JSX.Element {
   return (
@@ -9,7 +10,7 @@ function Header(): JSX.Element {
           <div className="header__left">
             <Logo className="header__logo-link" />
           </div>
-          <Nav className="header__nav" />
+          <NavContainer className="header__nav" authStatus={AuthorizationStatus.NoAuth} />
         </div>
       </div>
     </header>

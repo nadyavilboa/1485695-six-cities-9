@@ -1,5 +1,7 @@
-import PlaceCardMark from '../place-card-mark/place-card-mark';
-import PlaceCardButton from '../place-card-button/place-card-button';
+import Badge from '../badge/badge';
+import Bookmark from '../bookmark/bookmark';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const/routing';
 
 type PlaceCardProps = {
   className: string;
@@ -8,11 +10,11 @@ type PlaceCardProps = {
 function PlaceCard({className}: PlaceCardProps): JSX.Element {
   return (
     <article className={`${className} place-card`}>
-      <PlaceCardMark className="place-card__mark" />
+      <Badge className="place-card__mark" />
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={AppRoute.Room}>
           <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -20,7 +22,7 @@ function PlaceCard({className}: PlaceCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;120</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <PlaceCardButton className="place-card__bookmark-button" />
+          <Bookmark className="place-card__bookmark-button" />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -29,7 +31,7 @@ function PlaceCard({className}: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+          <Link to={AppRoute.Room}>Beautiful &amp; luxurious apartment at great location</Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>

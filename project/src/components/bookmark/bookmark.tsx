@@ -1,8 +1,8 @@
-type PlaceCardMarkProps = {
+type BookmarkProps = {
   className: string;
 }
 
-function PlaceCardMark({className}: PlaceCardMarkProps): JSX.Element {
+function Bookmark({className}: BookmarkProps): JSX.Element {
   return (
     <button className={`${className} button`} type="button">
       <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -13,4 +13,4 @@ function PlaceCardMark({className}: PlaceCardMarkProps): JSX.Element {
   );
 }
 
-export default PlaceCardMark;
+export default Bookmark;

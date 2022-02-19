@@ -1,5 +1,5 @@
 import TabsItem from '../tabs-item/tabs-item';
-import {CITIES} from '../../const/const';
+import {CITIES} from '../../const/general';
 
 function Tabs(): JSX.Element {
   return (
