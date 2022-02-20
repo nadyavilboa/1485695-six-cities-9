@@ -1,0 +1,14 @@
+.wrapper {
+  text-align: center;
+}
+
+.heading {
+  color: crimson;
+  margin-bottom: 50px;
+}
+
+.linkMain {
+  border: 2px solid darkgray;
+  padding: 15px;
+  border-radius: 15px;
+}
