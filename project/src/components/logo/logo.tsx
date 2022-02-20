@@ -1,12 +1,15 @@
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const/routing';
+
 type LogoProps = {
   className: string;
 }
 
 function Logo({className}: LogoProps): JSX.Element {
   return (
-    <a className={className}>
+    <Link to={AppRoute.Main} className={className}>
       <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-    </a>
+    </Link>
   );
 }
 
