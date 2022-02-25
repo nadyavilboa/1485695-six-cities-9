@@ -6,7 +6,7 @@ function Tabs(): JSX.Element {
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {CITIES.map((city) => <TabsItem className="locations__item" cityName={city} key={city} />)}
+          {CITIES.map((city) => <TabsItem className='locations__item' cityName={city} key={city} />)}
         </ul>
       </section>
     </div>

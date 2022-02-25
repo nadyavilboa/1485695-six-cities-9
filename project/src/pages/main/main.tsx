@@ -3,12 +3,14 @@ import Tabs from '../../components/tabs/tabs';
 import Sort from '../../components/sort/sort';
 import PlacesList from '../../components/places-list/places-list';
 import Map from '../../components/map/map';
+import {Offers} from '../../types/offers';
 
 type MainProps = {
   placesCount: number;
+  offers: Offers;
 }
 
-function Main({placesCount}: MainProps): JSX.Element {
+function Main({placesCount, offers}: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -21,7 +23,7 @@ function Main({placesCount}: MainProps): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{placesCount} places to stay in Amsterdam</b>
               <Sort className="places__sorting" />
-              <PlacesList className="cities__places-list" />
+              <PlacesList className="cities__places-list" offers={offers} />
             </section>
             <div className="cities__right-section">
               <Map className="cities__map" />
