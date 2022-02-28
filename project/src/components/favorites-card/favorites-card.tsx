@@ -2,32 +2,26 @@ import Badge from '../badge/badge';
 import Bookmark from '../bookmark/bookmark';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const/routing';
-import {MAX_RATING} from '../../const/general';
+import { MAX_RATING } from '../../const/general';
 import {Offer} from '../../types/offers';
 
-type PlaceCardProps = {
+type FavoritesCardProps = {
   className: string;
   offer: Offer;
-  onMouseOver: (cardId: number) => void;
 }
 
-function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const {className, offer, onMouseOver} = props;
+function FavoritesCard({className, offer}: FavoritesCardProps): JSX.Element {
   const {isPremium, id, previewImage, title, price, rating, description, type} = offer;
 
-  const cardItemMouseHoverHandler = () => {
-    onMouseOver(id);
-  };
-
   return (
-    <article className={`${className} place-card`} onMouseOver={cardItemMouseHoverHandler}>
+    <article className={`${className} place-card`}>
       {isPremium && <Badge className="place-card__mark" />}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Room}/:${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -50,4 +44,4 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
   );
 }
 
-export default PlaceCard;
+export default FavoritesCard;

@@ -9,7 +9,7 @@ export const offers: Offers = [
         longitude: 4.895168,
         zoom: 10,
       },
-      name: 'Amsterdam',
+      name: 'Paris',
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: [
@@ -21,7 +21,7 @@ export const offers: Offers = [
       isPro: true,
       name: 'Angelina',
     },
-    id: 1,
+    id: 0,
     images: [
       'img/1.png',
     ],
@@ -37,7 +37,7 @@ export const offers: Offers = [
     price: 120,
     rating: 5.8,
     title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment',
+    type: 'Apartment',
   },
   {
     bedrooms: 3,
@@ -61,9 +61,9 @@ export const offers: Offers = [
     },
     id: 1,
     images: [
-      'img/1.png',
+      'img/apartment-02.jpg',
     ],
-    isFavorite: true,
+    isFavorite: false,
     isPremium: true,
     location: {
       latitude: 52.35514938496378,
@@ -75,7 +75,7 @@ export const offers: Offers = [
     price: 120,
     rating: 6.8,
     title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment',
+    type: 'Apartment',
   },
   {
     bedrooms: 3,
@@ -97,9 +97,9 @@ export const offers: Offers = [
       isPro: true,
       name: 'Angelina',
     },
-    id: 1,
+    id: 2,
     images: [
-      'img/1.png',
+      'img/apartment-03.jpg',
     ],
     isFavorite: true,
     isPremium: false,
@@ -113,7 +113,7 @@ export const offers: Offers = [
     price: 120,
     rating: 4.8,
     title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment',
+    type: 'Apartment',
   },
   {
     bedrooms: 3,
@@ -130,14 +130,14 @@ export const offers: Offers = [
       'Heating',
     ],
     host: {
-      avatarUrl: 'img/1.png',
+      avatarUrl: 'avatar-angelina.jpg',
       id: 3,
       isPro: true,
       name: 'Angelina',
     },
-    id: 1,
+    id: 3,
     images: [
-      'img/1.png',
+      'img/apartment-02.jpg',
     ],
     isFavorite: true,
     isPremium: true,
@@ -151,7 +151,7 @@ export const offers: Offers = [
     price: 120,
     rating: 9.8,
     title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment',
+    type: 'Apartment',
   },
 ];
 

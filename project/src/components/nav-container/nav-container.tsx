@@ -20,8 +20,7 @@ function NavContainer({className, authStatus}: NavContainerProps): JSX.Element {
             </span>
           </Link>
         </li>
-        {isAuth ?
-          <SignOut className='header__nav-item' /> : ''}
+        {isAuth && <SignOut className='header__nav-item' />}
       </ul>
     </nav>
   );

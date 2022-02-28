@@ -1,4 +1,6 @@
-import {DEFAULT_CITY} from '../../const/general';
+import {CITIES} from '../../const/general';
+
+import cn from 'classnames';
 
 type TabsItemProps = {
   className: string;
@@ -8,7 +10,7 @@ type TabsItemProps = {
 function TabsItem({className, cityName}: TabsItemProps): JSX.Element {
   return (
     <li className={className}>
-      <a className={`locations__item-link tabs__item ${cityName === DEFAULT_CITY ? 'tabs__item--active' : ''}`} href="#">
+      <a className={cn( `locations__item-link tabs__item ${cityName === CITIES[0] ? 'tabs__item--active' : ''}`)} href="#">
         <span>{cityName}</span>
       </a>
     </li>

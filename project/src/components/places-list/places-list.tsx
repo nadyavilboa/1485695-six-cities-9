@@ -4,14 +4,14 @@ import {Offers} from '../../types/offers';
 type PlacesListProps = {
   className: string;
   offers: Offers;
+  onMouseOver: (cardId: number) => void;
 }
 
-function PlacesList({className, offers}: PlacesListProps): JSX.Element {
-  const placeArray = new Array(offers.length);
-  offers.forEach((offer, index) => placeArray[index] = <PlaceCard className="cities__place-card" offer={offer}/>);
+function PlacesList(props: PlacesListProps): JSX.Element {
+  const {className, offers, onMouseOver} = props;
   return (
     <div className={`${className} places__list tabs__content`}>
-      {placeArray}
+      {offers.map((offer) => <PlaceCard className="cities__place-card" offer={offer} key={offer.id} onMouseOver={onMouseOver}/>)}
     </div>
   );
 }
