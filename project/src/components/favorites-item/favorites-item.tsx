@@ -1,14 +1,14 @@
-import {OffersGroup} from '../../types/offers';
-import FavoritesCard from '../favorites-card/favorites-card';
+import {Offer, OffersGroup} from '../../types/offers';
+import PlaceCard from '../place-card/place-card';
 
 type FavoritesItemProps = {
   className: string;
   group: OffersGroup;
+  onMouseOver: (cardId: number) => void;
 }
 
-function FavoritesItem({className, group}: FavoritesItemProps): JSX.Element {
-  const {city, offers} = group;
-
+function FavoritesItem({className, group, onMouseOver}: FavoritesItemProps): JSX.Element {
+  const [city, offers] = group;
   return (
     <li className={className}>
       <div className="favorites__locations locations locations--current">
@@ -19,7 +19,7 @@ function FavoritesItem({className, group}: FavoritesItemProps): JSX.Element {
         </div>
       </div>
       <div className="favorites__places">
-        {offers.map((offer) => <FavoritesCard className="favorites__card" offer={offer} key={offer.id} />)}
+        {offers.map((offer: Offer) => <PlaceCard className="favorites__card" offer={offer} key={offer.id} onMouseOver={onMouseOver} isSmall />)}
       </div>
     </li>
   );

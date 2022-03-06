@@ -2,29 +2,30 @@ import Badge from '../badge/badge';
 import Bookmark from '../bookmark/bookmark';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const/routing';
-import {MAX_RATING} from '../../const/general';
 import {Offer} from '../../types/offers';
+import {getWidthValue} from '../../utils/utils';
 
 type PlaceCardProps = {
   className: string;
   offer: Offer;
   onMouseOver: (cardId: number) => void;
+  isSmall: boolean;
 }
 
-function PlaceCard(props: PlaceCardProps): JSX.Element {
-  const {className, offer, onMouseOver} = props;
-  const {isPremium, id, previewImage, title, price, rating, description, type} = offer;
-
-  const cardItemMouseHoverHandler = () => {
-    onMouseOver(id);
-  };
+function PlaceCard({
+  className,
+  offer,
+  onMouseOver,
+  isSmall,
+}: PlaceCardProps): JSX.Element {
+  const {isPremium, id, previewImage, title, price, isFavorite, rating, description, type} = offer;
 
   return (
-    <article className={`${className} place-card`} onMouseOver={cardItemMouseHoverHandler}>
+    <article className={`${className} place-card`} onMouseOver={() => onMouseOver(id)}>
       {isPremium && <Badge className="place-card__mark" />}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${isSmall?'favorites__image-wrapper':'cities__image-wrapper'} place-card__image-wrapper`}>
         <Link to={`${AppRoute.Room}/:${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
+          <img className="place-card__image" src={previewImage} width={isSmall?150:260} height={isSmall?110:200} alt={title} />
         </Link>
       </div>
       <div className="place-card__info">
@@ -33,11 +34,11 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <Bookmark className="place-card__bookmark-button" />
+          <Bookmark className="place-card" isFavorite={isFavorite} isRoom={false} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: rating*100|MAX_RATING}}></span>
+            <span style={{width: getWidthValue(rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

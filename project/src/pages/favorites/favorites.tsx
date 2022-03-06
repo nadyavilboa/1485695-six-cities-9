@@ -1,7 +1,8 @@
 import FavoritesItem from '../../components/favorites-item/favorites-item';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import {Offers, Offer} from '../../types/offers';
+import {Offers, Offer, OffersGroup} from '../../types/offers';
+import {useState} from 'react';
 
 type FavoritesProps = {
   offers: Offers;
@@ -9,37 +10,28 @@ type FavoritesProps = {
 
 const isFavorites = (offer: Offer) => offer.isFavorite;
 
-const isOfferCityValue = (offer: Offer, city: string) => offer.city.name === city;
+const mapOffersToCities = (offers: Offers) => offers.reduce<{[key: string]: Offers}>((acc, offer) => {
+  const currentCity = offer.city.name;
+  if (!acc[currentCity]) {
+    acc[currentCity] = [];
+  }
+  acc[currentCity].push(offer);
+  return acc;
+}, {});
 
-const getOffersCityValue = (offers: Offers, city: string) => {
-  const groupOffersCity = new Array(0);
-  offers.forEach((offer) => {
-    if (isOfferCityValue(offer, city)) {
-      groupOffersCity.push(offer);
-    }
-  });
-  return groupOffersCity;
-};
+function Favorites({offers}: FavoritesProps): JSX.Element {
+  const setActiveOffer = useState(0)[1];
 
-const getCityNames = (offers: Offers) => {
-  const arrayCityNames = new Array(0);
-  offers.forEach((offer: Offer) => arrayCityNames.push(offer.city.name));
-  return new Set(arrayCityNames);
-};
+  const onMouseOver = (cardId: number) => {
+    const currentOffer = offers.find((offer: Offer) =>
+      offer.id === cardId,
+    );
 
-const getGroupOffers = (offers: Offers) => {
-  const groupOffersCities = new Array(0);
-  const cityNames = getCityNames(offers);
-  cityNames.forEach((city) => groupOffersCities.push({
-    city: city,
-    offers: getOffersCityValue(offers, city),
-  }));
-  return groupOffersCities;
-};
+    currentOffer&&setActiveOffer(currentOffer.id);
+  };
 
-function Favorites(offers: FavoritesProps): JSX.Element {
-  const filterOffers = offers.offers.filter(isFavorites);
-  const groupOffers = getGroupOffers(filterOffers);
+  const filterOffers = offers.filter(isFavorites);
+  const groupOffers = mapOffersToCities(filterOffers);
   return (
     <div className="page">
       <Header />
@@ -48,7 +40,7 @@ function Favorites(offers: FavoritesProps): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {groupOffers.map((group) => <FavoritesItem className="favorites__locations-items" group={group} key={group.city}/>)}
+              {Object.entries(groupOffers).map((group: OffersGroup) => <FavoritesItem className="favorites__locations-items" group={group} key={offers.length} onMouseOver={onMouseOver} />)}
             </ul>
           </section>
         </div>

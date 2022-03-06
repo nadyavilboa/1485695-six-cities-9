@@ -1,11 +1,13 @@
 type BookmarkProps = {
   className: string;
+  isFavorite: boolean;
+  isRoom: boolean;
 }
 
-function Bookmark({className}: BookmarkProps): JSX.Element {
+function Bookmark({className,isFavorite,isRoom}: BookmarkProps): JSX.Element {
   return (
-    <button className={`${className} button`} type="button">
-      <svg className="place-card__bookmark-icon" width="18" height="19">
+    <button className={`${className}__bookmark-button ${isFavorite&&`${className}__bookmark-button--active`} button`} type="button">
+      <svg className={`${className}__bookmark-icon`} width={isRoom?31:18} height={isRoom?33:19}>
         <use xlinkHref="#icon-bookmark"></use>
       </svg>
       <span className="visually-hidden">To bookmarks</span>

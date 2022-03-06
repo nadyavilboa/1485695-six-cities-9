@@ -33,7 +33,7 @@ function Main({placesCount, offers}: MainProps): JSX.Element {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{placesCount} places to stay in Amsterdam</b>
               <Sort className="places__sorting" />
-              <PlacesList className="cities__places-list" offers={offers} onMouseOver={onMouseOver}/>
+              <PlacesList className="cities__places-list" offers={offers} onMouseOver={onMouseOver} />
             </section>
             <div className="cities__right-section">
               <Map className="cities__map" />
