@@ -8,7 +8,7 @@ import PrivateRoute from '../private-route/private-route';
 import {AppRoute, AuthorizationStatus} from '../../const/routing';
 import {Offers} from '../../types/offers';
 
-type AppScreenProps = {
+type AppScreenProps={
   placesCount: number;
   offers: Offers;
 }

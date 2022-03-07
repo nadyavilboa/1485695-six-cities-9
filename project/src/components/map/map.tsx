@@ -4,7 +4,7 @@ type MapProps = {
 
 function Map({className}: MapProps): JSX.Element {
   return (
-    <section className={`${className} map`} />
+    <section className = {`${className} map`} />
   );
 }
 

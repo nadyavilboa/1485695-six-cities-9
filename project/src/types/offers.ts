@@ -36,5 +36,3 @@ export type Offer = {
 };
 
 export type Offers = Offer[];
-
-export type OffersGroup = [string, Offers];

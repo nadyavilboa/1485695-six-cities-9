@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import { offers } from './mocks/offers';
 
-const Setting = {
+const Setting={
   PLACES_COUNT: 312,
 };
 

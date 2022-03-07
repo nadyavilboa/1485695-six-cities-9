@@ -3,10 +3,10 @@ import {CITIES} from '../../const/general';
 
 function Tabs(): JSX.Element {
   return (
-    <div className="tabs">
-      <section className="locations container">
-        <ul className="locations__list tabs__list">
-          {CITIES.map((city) => <TabsItem className="locations__item" cityName={city} key={city} />)}
+    <div className = "tabs">
+      <section className = "locations container">
+        <ul className = "locations__list tabs__list">
+          {CITIES.map((city) => <TabsItem className = "locations__item" cityName = {city} key = {city} />)}
         </ul>
       </section>
     </div>
