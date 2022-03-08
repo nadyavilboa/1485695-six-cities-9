@@ -2,38 +2,50 @@ import Badge from '../badge/badge';
 import Bookmark from '../bookmark/bookmark';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const/routing';
+import {Offer} from '../../types/offers';
+import {getWidthValue} from '../../utils/utils';
 
 type PlaceCardProps = {
   className: string;
+  offer: Offer;
+  onMouseOver?: (cardId: number) => void;
+  isSmall: boolean;
 }
 
-function PlaceCard({className}: PlaceCardProps): JSX.Element {
+function PlaceCard({
+  className,
+  offer,
+  onMouseOver,
+  isSmall,
+}: PlaceCardProps): JSX.Element {
+  const {isPremium, id, previewImage, title, price, isFavorite, rating, description, type} = offer;
+
   return (
-    <article className={`${className} place-card`}>
-      <Badge className="place-card__mark" />
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={AppRoute.Room}>
-          <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place image" />
+    <article className = {`${className} place-card`}>
+      {isPremium && <Badge className = "place-card__mark" />}
+      <div className = {`${isSmall?'favorites__image-wrapper':'cities__image-wrapper'} place-card__image-wrapper`}>
+        <Link to = {`${AppRoute.Room}/:${id}`}>
+          <img className = "place-card__image" src = {previewImage} width = {isSmall?150:260} height = {isSmall?110:200} alt = {title} />
         </Link>
       </div>
-      <div className="place-card__info">
-        <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">&euro;120</b>
-            <span className="place-card__price-text">&#47;&nbsp;night</span>
+      <div className = "place-card__info">
+        <div className = "place-card__price-wrapper">
+          <div className = "place-card__price">
+            <b className = "place-card__price-value">&euro;{price}</b>
+            <span className = "place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <Bookmark className="place-card__bookmark-button" />
+          <Bookmark className = "place-card" isFavorite = {isFavorite} isRoom = {false} />
         </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
-            <span className="visually-hidden">Rating</span>
+        <div className = "place-card__rating rating">
+          <div className = "place-card__stars rating__stars">
+            <span style = {{width: getWidthValue(rating)}}></span>
+            <span className = "visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
-          <Link to={AppRoute.Room}>Beautiful &amp; luxurious apartment at great location</Link>
+        <h2 className = "place-card__name">
+          <Link to = {`${AppRoute.Room}/:${id}`}>{description}</Link>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className = "place-card__type">{type}</p>
       </div>
     </article>
   );
