@@ -4,20 +4,25 @@ import {Offers} from '../../types/offers';
 type PlacesListProps = {
   className: string;
   offers: Offers;
-  onMouseOver: (cardId: number) => void;
+  isMain: boolean;
+  handleOnMouseOver?: (cardId: number) => void;
 }
 
-function PlacesList(props: PlacesListProps): JSX.Element {
-  const {className, offers, onMouseOver} = props;
+function PlacesList({
+  className,
+  offers,
+  isMain,
+  handleOnMouseOver,
+}: PlacesListProps): JSX.Element {
   return (
-    <div className = {`${className} places__list tabs__content`}>
+    <div className={`${className} places__list ${isMain} && 'tabs__content'`}>
       {offers.map((offer) => (
         <PlaceCard
-          className = "cities__place-card"
-          offer = {offer}
-          key = {offer.id}
-          onMouseOver = {onMouseOver}
-          isSmall = {false}
+          className="cities__place-card"
+          offer={offer}
+          key={offer.id}
+          handleOnMouseOver={handleOnMouseOver}
+          isSmall={false}
         />),
       )}
     </div>

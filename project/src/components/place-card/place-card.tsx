@@ -8,44 +8,44 @@ import {getWidthValue} from '../../utils/utils';
 type PlaceCardProps = {
   className: string;
   offer: Offer;
-  onMouseOver?: (cardId: number) => void;
+  handleOnMouseOver?: (cardId: number) => void;
   isSmall: boolean;
 }
 
 function PlaceCard({
   className,
   offer,
-  onMouseOver,
   isSmall,
+  handleOnMouseOver,
 }: PlaceCardProps): JSX.Element {
   const {isPremium, id, previewImage, title, price, isFavorite, rating, description, type} = offer;
 
   return (
-    <article className = {`${className} place-card`}>
-      {isPremium && <Badge className = "place-card__mark" />}
-      <div className = {`${isSmall?'favorites__image-wrapper':'cities__image-wrapper'} place-card__image-wrapper`}>
-        <Link to = {`${AppRoute.Room}/:${id}`}>
-          <img className = "place-card__image" src = {previewImage} width = {isSmall?150:260} height = {isSmall?110:200} alt = {title} />
+    <article className={`${className} place-card`} {...`${handleOnMouseOver} && onMouseOver={handleOnMouseOver(id)}`}>
+      {isPremium && <Badge className="place-card__mark" />}
+      <div className={`${isSmall?'favorites__image-wrapper':'cities__image-wrapper'} place-card__image-wrapper`}>
+        <Link to={`${AppRoute.Room}/:${id}`}>
+          <img className="place-card__image" src={previewImage} width={isSmall?150:260} height={isSmall?110:200} alt={title} />
         </Link>
       </div>
-      <div className = "place-card__info">
-        <div className = "place-card__price-wrapper">
-          <div className = "place-card__price">
-            <b className = "place-card__price-value">&euro;{price}</b>
-            <span className = "place-card__price-text">&#47;&nbsp;night</span>
+      <div className="place-card__info">
+        <div className="place-card__price-wrapper">
+          <div className="place-card__price">
+            <b className="place-card__price-value">&euro;{price}</b>
+            <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <Bookmark className = "place-card" isFavorite = {isFavorite} isRoom = {false} />
+          <Bookmark className="place-card" isFavorite={isFavorite} isRoom={false} />
         </div>
-        <div className = "place-card__rating rating">
-          <div className = "place-card__stars rating__stars">
-            <span style = {{width: getWidthValue(rating)}}></span>
-            <span className = "visually-hidden">Rating</span>
+        <div className="place-card__rating rating">
+          <div className="place-card__stars rating__stars">
+            <span style={{width: getWidthValue(rating)}}></span>
+            <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className = "place-card__name">
-          <Link to = {`${AppRoute.Room}/:${id}`}>{description}</Link>
+        <h2 className="place-card__name">
+          <Link to={`${AppRoute.Room}/:${id}`}>{description}</Link>
         </h2>
-        <p className = "place-card__type">{type}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
