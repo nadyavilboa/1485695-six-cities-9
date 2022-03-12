@@ -7,13 +7,15 @@ import Favorites from '../../pages/favorites/favorites';
 import PrivateRoute from '../private-route/private-route';
 import {AppRoute, AuthorizationStatus} from '../../const/routing';
 import {Offers} from '../../types/offers';
+import {Comments} from '../../types/comments';
 
 type AppScreenProps={
   placesCount: number;
   offers: Offers;
+  comments: Comments;
 }
 
-function App({placesCount, offers}: AppScreenProps): JSX.Element {
+function App({placesCount, offers, comments}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -27,7 +29,7 @@ function App({placesCount, offers}: AppScreenProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<Room offers={offers} />}
+          element={<Room offers={offers} comments={comments}/>}
         />
         <Route
           path={AppRoute.Favorites}
