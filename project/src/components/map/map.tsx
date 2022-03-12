@@ -2,7 +2,7 @@ import {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {Offers, City} from '../../types/offers';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 
 type MapProps = {
   className: string;
@@ -16,8 +16,8 @@ function Map({className, city, offers}: MapProps): JSX.Element {
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: 'img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconSize: [27, 39],
+    iconAnchor: [27, 39],
   });
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function Map({className, city, offers}: MapProps): JSX.Element {
   }, [defaultCustomIcon, map, offers]);
 
   return (
-    <section className={`${className} map`} style={{height: '579px'}} ref={mapRef} />
+    <section className={`${className} map`} style={{height: '100%'}} ref={mapRef} />
   );
 }
 

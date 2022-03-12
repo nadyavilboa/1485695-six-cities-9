@@ -9,3 +9,8 @@ export const RatingsValues = {
   'badly': 2,
   'terribly': 1,
 };
+
+export enum TileLayerParameters {
+  URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  Attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+}
