@@ -1,6 +1,7 @@
-import {CITIES} from '../../const/general';
-
-import cn from 'classnames';
+import {useAppDispatch} from '../../hooks';
+import {AppRoute} from '../../const/routing';
+import {Link} from 'react-router-dom';
+import {setCity} from '../../store/action';
 
 type TabsItemProps = {
   className: string;
@@ -8,11 +9,16 @@ type TabsItemProps = {
 }
 
 function TabsItem({className, cityName}: TabsItemProps): JSX.Element {
+  const dispatch = useAppDispatch();
   return (
     <li className={className}>
-      <a className={cn( `locations__item-link tabs__item ${cityName === CITIES[0] ? 'tabs__item--active' : ''}`)} href="#">
+      <Link
+        className="locations__item-link tabs__item"
+        to={AppRoute.Main}
+        onClick={() => dispatch(setCity(cityName))}
+      >
         <span>{cityName}</span>
-      </a>
+      </Link>
     </li>
   );
 }

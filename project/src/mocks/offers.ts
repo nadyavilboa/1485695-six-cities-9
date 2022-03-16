@@ -9,7 +9,7 @@ export const offers: Offers = [
         longitude: 4.85309666406198,
         zoom: 10,
       },
-      name: 'Amsterdam',
+      name: 'Paris',
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: [
@@ -85,7 +85,7 @@ export const offers: Offers = [
         longitude: 4.929309666406198,
         zoom: 10,
       },
-      name: 'Amsterdam',
+      name: 'Cologne',
     },
     description: 'Nice, cozy, warm big bed apartment',
     goods: [
@@ -123,7 +123,7 @@ export const offers: Offers = [
         longitude: 4.939309666406198,
         zoom: 10,
       },
-      name: 'Amsterdam',
+      name: 'Hamburg',
     },
     description: 'Wood and stone place',
     goods: [
