@@ -9,6 +9,7 @@ type PlaceCardProps = {
   className: string;
   offer: Offer;
   onMouseOver?: (cardId: number) => void;
+  onMouseLeave?: () => void;
   isSmall: boolean;
 }
 
@@ -17,11 +18,12 @@ function PlaceCard({
   offer,
   isSmall,
   onMouseOver,
+  onMouseLeave,
 }: PlaceCardProps): JSX.Element {
   const {isPremium, id, previewImage, title, price, isFavorite, rating, description, type} = offer;
 
   return (
-    <article className={`${className} place-card`} onMouseOver={() => onMouseOver?.(id)} >
+    <article className={`${className} place-card`} onMouseOver={() => onMouseOver?.(id)} onMouseLeave={onMouseLeave}>
       {isPremium && <Badge className="place-card__mark" />}
       <div className={`${isSmall ? 'favorites__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}>
         <Link to={`${AppRoute.Room}/:${id}`}>

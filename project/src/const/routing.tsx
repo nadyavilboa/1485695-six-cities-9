@@ -4,9 +4,3 @@ export enum AppRoute {
   Main = '/',
   Room = '/offer',
 }
-
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
-}

@@ -5,7 +5,8 @@ import Login from '../../pages/login/login';
 import Room from '../../pages/room/room';
 import Favorites from '../../pages/favorites/favorites';
 import PrivateRoute from '../private-route/private-route';
-import {AppRoute, AuthorizationStatus} from '../../const/routing';
+import {AppRoute} from '../../const/routing';
+import {AuthorizationStatus} from '../../const/general';
 import {Offers} from '../../types/offers';
 import {Comments} from '../../types/comments';
 

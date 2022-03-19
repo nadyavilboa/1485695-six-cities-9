@@ -6,7 +6,7 @@ type RatingItemProps = {
   handleFieldChange: (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-function RatingItem({title,value,handleFieldChange}: RatingItemProps): JSX.Element {
+function RatingItem({title, value, handleFieldChange}: RatingItemProps): JSX.Element {
   return (
     <>
       <input

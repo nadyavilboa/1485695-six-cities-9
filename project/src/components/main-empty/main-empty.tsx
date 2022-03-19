@@ -1,11 +1,15 @@
 import Tabs from '../../components/tabs/tabs';
 
-function MainEmpty(): JSX.Element {
+type MainEmptyProps = {
+  activeCity: string;
+}
+
+function MainEmpty({activeCity}: MainEmptyProps): JSX.Element {
 
   return (
     <main className="page__main page__main--index page__main--index-empty">
       <h1 className="visually-hidden">Cities</h1>
-      <Tabs />
+      <Tabs activeCity={activeCity} />
       <div className="cities">
         <div className="cities__places-container cities__places-container--empty container">
           <section className="cities__no-places">
