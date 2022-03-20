@@ -5,8 +5,7 @@ type PlacesListProps = {
   className: string;
   offers: Offers;
   isMain: boolean;
-  onMouseOver?: (cardId: number) => void;
-  onMouseLeave?: () => void;
+  onMouseOver?: (cardId: number | undefined) => void;
 }
 
 function PlacesList({
@@ -14,7 +13,6 @@ function PlacesList({
   offers,
   isMain,
   onMouseOver,
-  onMouseLeave,
 }: PlacesListProps): JSX.Element {
 
   return (
@@ -25,7 +23,6 @@ function PlacesList({
           offer={offer}
           key={offer.id}
           onMouseOver={onMouseOver}
-          onMouseLeave={onMouseLeave}
           isSmall={false}
         />),
       )}

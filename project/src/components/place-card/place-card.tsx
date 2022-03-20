@@ -8,8 +8,7 @@ import {getWidthValue} from '../../utils/utils';
 type PlaceCardProps = {
   className: string;
   offer: Offer;
-  onMouseOver?: (cardId: number) => void;
-  onMouseLeave?: () => void;
+  onMouseOver?: (cardId: number | undefined) => void;
   isSmall: boolean;
 }
 
@@ -18,12 +17,15 @@ function PlaceCard({
   offer,
   isSmall,
   onMouseOver,
-  onMouseLeave,
 }: PlaceCardProps): JSX.Element {
-  const {isPremium, id, previewImage, title, price, isFavorite, rating, description, type} = offer;
+  const {isPremium, id, previewImage, title, price, isFavorite, rating, type} = offer;
 
   return (
-    <article className={`${className} place-card`} onMouseOver={() => onMouseOver?.(id)} onMouseLeave={onMouseLeave}>
+    <article
+      className={`${className} place-card`}
+      onMouseOver={() => onMouseOver?.(id)}
+      onMouseLeave={() => onMouseOver?.(undefined)}
+    >
       {isPremium && <Badge className="place-card__mark" />}
       <div className={`${isSmall ? 'favorites__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}>
         <Link to={`${AppRoute.Room}/:${id}`}>
@@ -45,7 +47,7 @@ function PlaceCard({
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}/:${id}`}>{description}</Link>
+          <Link to={`${AppRoute.Room}/:${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

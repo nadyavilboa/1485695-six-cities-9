@@ -1,51 +1,44 @@
-import Tabs from '../../components/tabs/tabs';
 import Sort from '../../components/sort/sort';
 import PlacesList from '../../components/places-list/places-list';
 import Map from '../../components/map/map';
 import {Offers} from '../../types/offers';
 import {Offer} from '../../types/offers';
 import {SortTypes} from '../../const/general';
+import {useState} from 'react';
 
 const sortOffers = (offers: Offer[], sort: string) => {
-  const sortedOffers = offers.slice();
   switch (sort) {
-    case SortTypes.POPULAR:
-      return sortedOffers;
     case SortTypes.PRICE_ASC:
-      return sortedOffers.sort((a: Offer, b: Offer) => a.price - b.price);
+      return offers.sort((a: Offer, b: Offer) => a.price - b.price);
     case SortTypes.PRICE_DESC:
-      return sortedOffers.sort((a: Offer, b: Offer) => b.price - a.price);
+      return offers.sort((a: Offer, b: Offer) => b.price - a.price);
     case SortTypes.TOP_RATED:
-      return sortedOffers.sort((a: Offer, b: Offer) => a.rating - b.rating);
+      return offers.sort((a: Offer, b: Offer) => a.rating - b.rating);
     default:
-      return sortedOffers;
+      return offers;
   }
 };
 
 type MainCitiesProps = {
   cityOffers: Offers;
-  onMouseOver: (cardId: number) => void;
-  onMouseLeave: () => void;
   activeCity: string;
   activeSort: string;
-  currentPoint: number | undefined;
 }
 
 function MainCities({
   cityOffers,
-  onMouseOver,
-  onMouseLeave,
   activeCity,
   activeSort,
-  currentPoint,
 }: MainCitiesProps): JSX.Element {
-
   const sortedOffers = sortOffers(cityOffers, activeSort);
+  const [activeOffer, setActiveOffer] = useState<number | undefined>(undefined);
+
+  const handleOnMouseOver = (cardId: number | undefined) => {
+    setActiveOffer(cardId);
+  };
 
   return (
     <main className="page__main page__main--index">
-      <h1 className="visually-hidden">Cities</h1>
-      <Tabs activeCity={activeCity} />
       <div className="cities">
         <div className="cities__places-container container">
           <section className="cities__places places">
@@ -56,8 +49,7 @@ function MainCities({
               className="cities__places-list"
               offers={sortedOffers}
               isMain
-              onMouseOver={onMouseOver}
-              onMouseLeave={onMouseLeave}
+              onMouseOver={handleOnMouseOver}
             />
           </section>
           <div className="cities__right-section">
@@ -65,7 +57,7 @@ function MainCities({
               className="cities__map"
               city={sortedOffers[0].city}
               offers={sortedOffers}
-              currentPoint={currentPoint}
+              currentPoint={activeOffer}
             />
           </div>
         </div>

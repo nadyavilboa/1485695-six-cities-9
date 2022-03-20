@@ -10,8 +10,7 @@ type SortProps = {
 function Sort({activeSort}: SortProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
-  const sortMouseOverHandler = () => setIsOpen(true);
-  const sortMouseLeaveHandler = () => setIsOpen(false);
+  const sortClickHandler = () => setIsOpen(!isOpen);
 
   const dispatch = useAppDispatch();
 
@@ -20,8 +19,7 @@ function Sort({activeSort}: SortProps): JSX.Element {
       className="places__sorting"
       action="#"
       method="get"
-      onMouseOver={sortMouseOverHandler}
-      onMouseLeave={sortMouseLeaveHandler}
+      onClick={sortClickHandler}
     >
       <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex={0} >
@@ -36,7 +34,10 @@ function Sort({activeSort}: SortProps): JSX.Element {
             className={`places__option ${sortType === activeSort && 'places__option--active'}`}
             tabIndex={0}
             key={sortType}
-            onClick={() => dispatch(setSort(sortType))}
+            onClick={() => {
+              sortClickHandler();
+              dispatch(setSort(sortType));
+            }}
           >
             {sortType}
           </li>

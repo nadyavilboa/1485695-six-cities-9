@@ -59,7 +59,7 @@ export const offers: Offers = [
       isPro: true,
       name: 'Angelina',
     },
-    id: 0,
+    id: 1,
     images: [
       'img/apartment-01.jpg',
     ],
@@ -97,7 +97,7 @@ export const offers: Offers = [
       isPro: true,
       name: 'Angelina',
     },
-    id: 0,
+    id: 2,
     images: [
       'img/apartment-01.jpg',
     ],
@@ -135,7 +135,7 @@ export const offers: Offers = [
       isPro: true,
       name: 'Angelina',
     },
-    id: 1,
+    id: 3,
     images: [
       'img/apartment-02.jpg',
     ],
@@ -173,7 +173,7 @@ export const offers: Offers = [
       isPro: true,
       name: 'Angelina',
     },
-    id: 2,
+    id: 4,
     images: [
       'img/apartment-03.jpg',
     ],
@@ -211,7 +211,7 @@ export const offers: Offers = [
       isPro: true,
       name: 'Angelina',
     },
-    id: 2,
+    id: 5,
     images: [
       'img/apartment-03.jpg',
     ],
@@ -249,7 +249,7 @@ export const offers: Offers = [
       isPro: true,
       name: 'Angelina',
     },
-    id: 3,
+    id: 6,
     images: [
       'img/apartment-02.jpg',
     ],
@@ -287,7 +287,7 @@ export const offers: Offers = [
       isPro: true,
       name: 'Angelina',
     },
-    id: 3,
+    id: 7,
     images: [
       'img/apartment-02.jpg',
     ],
