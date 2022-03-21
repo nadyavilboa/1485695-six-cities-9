@@ -5,7 +5,7 @@ type PlacesListProps = {
   className: string;
   offers: Offers;
   isMain: boolean;
-  onMouseOver?: (cardId: number) => void;
+  onMouseOver?: (cardId: number | undefined) => void;
 }
 
 function PlacesList({
@@ -14,8 +14,9 @@ function PlacesList({
   isMain,
   onMouseOver,
 }: PlacesListProps): JSX.Element {
+
   return (
-    <div className={`${className} places__list ${isMain} && 'tabs__content'`}>
+    <div className={`${className} places__list ${isMain && 'tabs__content'}`}>
       {offers.map((offer) => (
         <PlaceCard
           className="cities__place-card"

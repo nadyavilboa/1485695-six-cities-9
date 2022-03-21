@@ -1,43 +1,22 @@
 import Header from '../../components/header/header';
+import {useAppSelector} from '../../hooks';
 import Tabs from '../../components/tabs/tabs';
-import Sort from '../../components/sort/sort';
-import PlacesList from '../../components/places-list/places-list';
-import Map from '../../components/map/map';
-import {Offers} from '../../types/offers';
-import {useState} from 'react';
-import {city} from '../../mocks/city';
+import MainEmpty from '../../components/main-empty/main-empty';
+import MainCities from '../../components/main-cities/main-cities';
 
-type MainProps = {
-  placesCount: number;
-  offers: Offers;
-}
+function Main(): JSX.Element {
+  const {city, offers, sort} = useAppSelector((state) => state);
 
-function Main({placesCount, offers}: MainProps): JSX.Element {
-  const [, setActiveOffer] = useState(0);
+  const cityOffers = offers.filter((offer) => offer.city.name === city);
 
-  const handleOnMouseOver = (cardId: number) => {
-    setActiveOffer(cardId);
-  };
   return (
     <div className="page page--gray page--main">
       <Header />
-      <main className="page__main page__main--index">
-        <h1 className="visually-hidden">Cities</h1>
-        <Tabs />
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
-              <Sort className="places__sorting" />
-              <PlacesList className="cities__places-list" offers={offers} isMain onMouseOver={handleOnMouseOver} />
-            </section>
-            <div className="cities__right-section">
-              <Map className="cities__map" city={city} offers={offers} />
-            </div>
-          </div>
-        </div>
-      </main>
+      <h1 className="visually-hidden">Cities</h1>
+      <Tabs activeCity={city} />
+      {cityOffers.length === 0
+        ? <MainEmpty />
+        : <MainCities cityOffers={cityOffers} activeCity={city} activeSort={sort} />}
     </div>
   );
 }

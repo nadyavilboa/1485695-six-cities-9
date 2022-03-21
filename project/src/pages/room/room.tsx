@@ -101,7 +101,12 @@ function Room({offers, comments}: RoomProps): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map className="cities__map" city={city} offers={otherOffers} />
+            <Map
+              className="cities__map"
+              city={city}
+              offers={offers}
+              currentPoint={currentOffer?.id}
+            />
           </section>
         </section>
         <div className="container">
