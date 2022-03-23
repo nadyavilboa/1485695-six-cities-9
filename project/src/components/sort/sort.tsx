@@ -1,4 +1,4 @@
-import {SortTypes} from '../../const/general';
+import {SortTypes} from '../../const';
 import {useState} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {setSort} from '../../store/action';

@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import Header from '../../components/header/header';
-import {AppRoute} from '../../const/routing';
+import {AppRoute} from '../../const';
 import styles from './not-found.module.css';
 
 function NotFound(): JSX.Element {

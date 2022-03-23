@@ -3,10 +3,6 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import {Offers, Offer} from '../../types/offers';
 
-type FavoritesProps = {
-  offers: Offers;
-}
-
 const isFavorites = (offer: Offer) => offer.isFavorite;
 
 const mapOffersToCities = (offers: Offers) => offers.reduce<{[key: string]: Offers}>((acc, offer) => {
@@ -18,7 +14,9 @@ const mapOffersToCities = (offers: Offers) => offers.reduce<{[key: string]: Offe
   return acc;
 }, {});
 
-function Favorites({offers}: FavoritesProps): JSX.Element {
+function Favorites(): JSX.Element {
+  const offers:Offers = [];  //внимание, здесь времянка (заглушка)
+
   const filterOffers = offers.filter(isFavorites);
   const groupOffers = mapOffersToCities(filterOffers);
   return (

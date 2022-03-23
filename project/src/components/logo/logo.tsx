@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const/routing';
+import {AppRoute} from '../../const';
 
 type LogoProps = {
   className: string;
