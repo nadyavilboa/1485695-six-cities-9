@@ -2,21 +2,18 @@ import {useParams} from 'react-router-dom';
 import Header from '../../components/header/header';
 import Badge from '../../components/badge/badge';
 import Bookmark from '../../components/bookmark/bookmark';
-import {Offer} from '../../types/offers';
+import {Offer, Offers} from '../../types/offers';
 import {getWidthValue} from '../../utils/utils';
 import CommentsList from '../../components/comments-list/comments-list';
-import {Comments} from '../../types/comments';
 import Map from '../../components/map/map';
 import PlacesList from '../../components/places-list/places-list';
-import {city} from '../../mocks/city';
+import { Comments } from '../../types/comments';
 
-type RoomProps = {
-  offers: Offer[];
-  comments: Comments;
-}
-
-function Room({offers, comments}: RoomProps): JSX.Element {
+function Room(): JSX.Element {
   const params = useParams();
+  const offers:Offers = [];  //внимание, здесь времянка (заглушка)
+
+  const comments: Comments = [];  //внимание, здесь времянка (заглушка)
 
   const currentId = Number(params.id?.slice(1));
   const currentOfferIndex = offers.findIndex((offer: Offer) => offer.id === currentId);
@@ -103,7 +100,7 @@ function Room({offers, comments}: RoomProps): JSX.Element {
           <section className="property__map map">
             <Map
               className="cities__map"
-              city={city}
+              city={offers[0].city}
               offers={offers}
               currentPoint={currentOffer?.id}
             />

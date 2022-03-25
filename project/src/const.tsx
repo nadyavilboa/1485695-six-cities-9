@@ -1,3 +1,23 @@
+export enum AppRoute {
+  SignIn = '/login',
+  Favorites = '/favorites',
+  Main = '/',
+  Room = '/offer',
+}
+
+export enum APIRoute {
+  Hotels = '/hotels',
+  Favorite = '/favorite',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export enum HTTPCode {
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
+}
+
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const MAX_RATING = 5;

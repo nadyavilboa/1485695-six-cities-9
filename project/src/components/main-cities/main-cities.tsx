@@ -3,7 +3,7 @@ import PlacesList from '../../components/places-list/places-list';
 import Map from '../../components/map/map';
 import {Offers} from '../../types/offers';
 import {Offer} from '../../types/offers';
-import {SortTypes} from '../../const/general';
+import {SortTypes} from '../../const';
 import {useState} from 'react';
 
 const sortOffers = (offers: Offer[], sort: string) => {

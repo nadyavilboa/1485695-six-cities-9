@@ -1,5 +1,5 @@
-import {AppRoute} from '../../const/routing';
-import {AuthorizationStatus} from '../../const/general';
+import {AppRoute} from '../../const';
+import {AuthorizationStatus} from '../../const';
 import {Link} from 'react-router-dom';
 import SignOut from '../sign-out/sign-out';
 

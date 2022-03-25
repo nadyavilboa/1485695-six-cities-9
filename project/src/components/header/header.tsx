@@ -1,6 +1,6 @@
 import Logo from '../logo/logo';
 import NavContainer from '../nav-container/nav-container';
-import {AuthorizationStatus} from '../../const/general';
+import {AuthorizationStatus} from '../../const';
 
 function Header(): JSX.Element {
   return (

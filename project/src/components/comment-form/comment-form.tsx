@@ -1,5 +1,5 @@
 import {ChangeEvent, useState} from 'react';
-import {RatingsValues} from '../../const/general';
+import {RatingsValues} from '../../const';
 import RatingItem from '../rating-item/rating-item';
 
 type CommentFormProps={

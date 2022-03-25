@@ -5,17 +5,20 @@ import Login from '../../pages/login/login';
 import Room from '../../pages/room/room';
 import Favorites from '../../pages/favorites/favorites';
 import PrivateRoute from '../private-route/private-route';
-import {AppRoute} from '../../const/routing';
-import {AuthorizationStatus} from '../../const/general';
-import {Offers} from '../../types/offers';
-import {Comments} from '../../types/comments';
+import {AppRoute} from '../../const';
+import {AuthorizationStatus} from '../../const';
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-type AppScreenProps={
-  offers: Offers;
-  comments: Comments;
-}
+function App(): JSX.Element {
+  const {isDataLoaded} = useAppSelector((state) => state);
 
-function App({offers, comments}: AppScreenProps): JSX.Element {
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -29,7 +32,7 @@ function App({offers, comments}: AppScreenProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<Room offers={offers} comments={comments}/>}
+          element={<Room />}
         />
         <Route
           path={AppRoute.Favorites}
@@ -37,7 +40,7 @@ function App({offers, comments}: AppScreenProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <Favorites offers={offers} />
+              <Favorites />
             </PrivateRoute>
           }
         />

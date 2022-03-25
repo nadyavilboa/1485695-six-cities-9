@@ -1,5 +1,5 @@
 import TabsItem from '../tabs-item/tabs-item';
-import {CITIES} from '../../const/general';
+import {CITIES} from '../../const';
 
 type TabsProps = {
   activeCity: string;

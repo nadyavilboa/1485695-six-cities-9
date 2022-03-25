@@ -9,6 +9,7 @@ type TabsItemProps = {
 
 function TabsItem({className, cityName, activeCity}: TabsItemProps): JSX.Element {
   const dispatch = useAppDispatch();
+
   return (
     <li className={className}>
       <a

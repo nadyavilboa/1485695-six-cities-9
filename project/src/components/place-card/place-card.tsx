@@ -1,7 +1,7 @@
 import Badge from '../badge/badge';
 import Bookmark from '../bookmark/bookmark';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const/routing';
+import {AppRoute} from '../../const';
 import {Offer} from '../../types/offers';
 import {getWidthValue} from '../../utils/utils';
 
