@@ -1,18 +1,24 @@
 function LoadingScreen(): JSX.Element {
   return (
-    <p
+    <div
       style={{
-        position: 'fixed',
-        top: '30px',
-        right: '30px',
-        padding: '10px',
-        backgroundColor: '#98fb98',
-        color: 'white',
-        borderRadius: '5px',
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
       }}
     >
-      Loading...
-    </p>
+      <p
+        style={{
+          padding: '50px',
+          color: 'darkblue',
+          fontSize: '50px',
+          textAlign: 'center',
+        }}
+      >
+        Loading...
+      </p>
+    </div>
   );
 }
 
