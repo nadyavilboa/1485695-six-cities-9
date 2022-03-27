@@ -1,6 +1,5 @@
 import Logo from '../logo/logo';
 import NavContainer from '../nav-container/nav-container';
-import {AuthorizationStatus} from '../../const';
 
 function Header(): JSX.Element {
   return (
@@ -10,7 +9,7 @@ function Header(): JSX.Element {
           <div className="header__left">
             <Logo className="header__logo-link" />
           </div>
-          <NavContainer className="header__nav" authStatus={AuthorizationStatus.Auth} />
+          <NavContainer className="header__nav" />
         </div>
       </div>
     </header>

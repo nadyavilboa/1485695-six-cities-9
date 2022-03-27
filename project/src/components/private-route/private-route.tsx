@@ -3,7 +3,7 @@ import {AppRoute} from '../../const';
 import {AuthorizationStatus} from '../../const';
 
 type PrivateRouteProps = {
-  authorizationStatus: AuthorizationStatus;
+  authorizationStatus: string;
   children: JSX.Element;
 }
 
