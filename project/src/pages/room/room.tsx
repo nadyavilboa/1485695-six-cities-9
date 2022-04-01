@@ -1,25 +1,37 @@
 import {useParams} from 'react-router-dom';
+import {useAppSelector} from '../../hooks';
 import Header from '../../components/header/header';
 import Badge from '../../components/badge/badge';
 import Bookmark from '../../components/bookmark/bookmark';
-import {Offer, Offers} from '../../types/offers';
 import {getWidthValue} from '../../utils/utils';
 import CommentsList from '../../components/comments-list/comments-list';
 import Map from '../../components/map/map';
 import PlacesList from '../../components/places-list/places-list';
-import { Comments } from '../../types/comments';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
+import CommentForm from '../../components/comment-form/comment-form';
+import {AuthorizationStatus} from '../../const';
+
+import {store} from '../../store/index';
+import {fetchOfferIdAction, fetchOtherOffersAction, fetchCommentsAction} from '../../store/api-actions';
 
 function Room(): JSX.Element {
   const params = useParams();
-  const offers:Offers = [];  //внимание, здесь времянка (заглушка)
-
-  const comments: Comments = [];  //внимание, здесь времянка (заглушка)
 
   const currentId = Number(params.id?.slice(1));
-  const currentOfferIndex = offers.findIndex((offer: Offer) => offer.id === currentId);
-  const currentOffer = offers[currentOfferIndex];
+  store.dispatch(fetchOfferIdAction(currentId));
+  store.dispatch(fetchCommentsAction(currentId));
 
-  const otherOffers = [...offers.slice(0, currentOfferIndex), ...offers.slice(currentOfferIndex + 1)];
+  const {currentOffer, comments, authorizationStatus} = useAppSelector((state) => state);
+
+  store.dispatch(fetchOtherOffersAction(currentId));
+  const otherOffers = useAppSelector((state) => state.otherOffers);
+
+  if (!currentOffer || !comments || !otherOffers) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <div className="page">
       <Header />
@@ -95,13 +107,17 @@ function Room(): JSX.Element {
                 </div>
               </div>
               <CommentsList className="property__reviews" comments={comments} />
+
+              {authorizationStatus === AuthorizationStatus.Auth && (
+                <CommentForm className="reviews__form" currentOfferId={currentId} />
+              )}
             </div>
           </div>
           <section className="property__map map">
             <Map
               className="cities__map"
-              city={offers[0].city}
-              offers={offers}
+              city={currentOffer?.city}
+              offers={[currentOffer, ...otherOffers]}
               currentPoint={currentOffer?.id}
             />
           </section>

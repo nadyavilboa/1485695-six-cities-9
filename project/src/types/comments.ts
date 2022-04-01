@@ -12,3 +12,9 @@ export type Comment = {
 };
 
 export type Comments = Comment[];
+
+export type NewComment = {
+  offerId: number;
+  rating: number;
+  comment: string;
+};

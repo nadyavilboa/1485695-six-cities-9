@@ -1,42 +1,81 @@
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, FormEvent, useState} from 'react';
 import {RatingsValues} from '../../const';
 import RatingItem from '../rating-item/rating-item';
+import {store} from '../../store/index';
+import {fetchNewCommentAction} from '../../store/api-actions';
 
-type CommentFormProps={
+const MIN_COMMENT_LENGTH = 50;
+const MAX_COMMENT_LENGTH = 300;
+
+type CommentFormProps = {
   className: string;
+  currentOfferId: number;
 }
 
-function CommentForm(className: CommentFormProps): JSX.Element {
-  const [formData, setFormData] = useState({
-    rating: '',
-    review: '',
+function CommentForm({className, currentOfferId}: CommentFormProps): JSX.Element {
+  const [newComment, setNewComment] = useState({
+    offerId: currentOfferId,
+    rating: 0,
+    comment: '',
   });
 
-  const handleFieldChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {name, value} = evt.target;
-    setFormData({...formData, [name]: value});
+  const commentValidate = (comment: string) => {
+    if (comment.length > MIN_COMMENT_LENGTH && comment.length < MAX_COMMENT_LENGTH) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isDisabled = newComment.rating === 0 || !commentValidate(newComment.comment);
+
+  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    setNewComment({...newComment, rating: Number(evt.target.value)});
+  };
+
+  const handleCommentChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+    setNewComment({...newComment, comment: evt.target.value});
+  };
+
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    store.dispatch(fetchNewCommentAction(newComment));
+    setNewComment({...newComment, rating: 0, comment: ''});
   };
 
   return (
-    <form className={`${className} form`} action="#" method="post">
+    <form
+      className={`${className} form`}
+      action="#"
+      method="post"
+      onSubmit={handleFormSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {Object.entries(RatingsValues).sort(([keyFirst, valFirst], [keySecond, valSecond]) => valSecond - valFirst )
-          .map(([title, value]) => <RatingItem title={title} value={value} key={value} handleFieldChange={handleFieldChange} />)}
+          .map(([title, value]) => <RatingItem title={title} value={value} key={value} onChange={handleRatingChange} />)}
       </div>
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        onChange={handleFieldChange}
-        value={formData.review}
+        onChange={handleCommentChange}
+        value={newComment.comment}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set
+          <span className="reviews__star">rating</span> and describe your stay with
+          <b className="reviews__text-amount"> at least 50 characters</b>, but <b className="reviews__text-amount">at 300</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={isDisabled}
+        >
+          Submit
+        </button>
       </div>
     </form>
   );

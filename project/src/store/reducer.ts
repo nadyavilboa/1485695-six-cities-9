@@ -1,12 +1,25 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {setCity, setSort, loadOffers, requireAuthorization, saveUserData} from './action';
+import {
+  setCity,
+  setSort,
+  loadOffers,
+  loadOfferId,
+  loadOtherOffers,
+  loadComments,
+  requireAuthorization,
+  saveUserData
+} from './action';
 import {CITIES, SortTypes, AuthorizationStatus} from '../const';
-import {Offers} from '../types/offers';
-import { UserData } from '../types/user-data';
+import {Offer, Offers} from '../types/offers';
+import {UserData} from '../types/user-data';
+import {Comments} from '../types/comments';
 
 type InitialState = {
   city: string,
   offers: Offers,
+  currentOffer: Offer | null,
+  otherOffers: Offers | null,
+  comments: Comments | null,
   sort: string,
   isDataLoaded: boolean,
   authorizationStatus: string,
@@ -16,6 +29,9 @@ type InitialState = {
 const initialState: InitialState = {
   city: CITIES[0],
   offers: [],
+  currentOffer: null,
+  otherOffers: null,
+  comments: null,
   sort: SortTypes.POPULAR,
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -33,6 +49,15 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
       state.isDataLoaded = true;
+    })
+    .addCase(loadOfferId, (state, action) => {
+      state.currentOffer = action.payload;
+    })
+    .addCase(loadOtherOffers, (state, action) => {
+      state.otherOffers = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;

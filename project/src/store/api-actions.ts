@@ -2,10 +2,19 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppRoute, APIRoute, AuthorizationStatus} from '../const';
 import {api} from './index';
 import {store} from './index';
-import {Offers} from '../types/offers';
+import {Offers, Offer} from '../types/offers';
+import {Comments, Comment, NewComment} from '../types/comments';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
-import {loadOffers, requireAuthorization, redirectToRoute, saveUserData} from './action';
+import {
+  loadOffers,
+  loadOfferId,
+  loadOtherOffers,
+  loadComments,
+  requireAuthorization,
+  redirectToRoute,
+  saveUserData}
+  from './action';
 import {errorHandle} from '../services/error-handle';
 import {saveToken, dropToken} from '../services/token';
 
@@ -15,6 +24,55 @@ export const fetchHotelsAction = createAsyncThunk(
     try {
       const {data} = await api.get<Offers>(APIRoute.Hotels);
       store.dispatch(loadOffers(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchOfferIdAction = createAsyncThunk(
+  'data/loadOfferId',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Offer>(`${APIRoute.Hotels}/${id}`);
+      store.dispatch(loadOfferId(data));
+    } catch (error) {
+      errorHandle(error);
+      store.dispatch(redirectToRoute(AppRoute.NotFound));
+    }
+  },
+);
+
+export const fetchCommentsAction = createAsyncThunk(
+  'data/loadComments',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Comments>(`${APIRoute.Comments}/${id}`);
+      store.dispatch(loadComments(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchNewCommentAction = createAsyncThunk(
+  'data/sendNewComment',
+  async ({offerId, rating, comment}: NewComment) => {
+    try {
+      await api.post<Comment>(`${APIRoute.Comments}/${offerId}`, {rating, comment});
+      store.dispatch(fetchCommentsAction(offerId));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchOtherOffersAction = createAsyncThunk(
+  'data/loadOtherOffers',
+  async (id: number) => {
+    try {
+      const {data} = await api.get<Offers>(`${APIRoute.Hotels}/${id}/nearby`);
+      store.dispatch(loadOtherOffers(data));
     } catch (error) {
       errorHandle(error);
     }
