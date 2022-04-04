@@ -15,7 +15,7 @@ import {
   redirectToRoute,
   saveUserData}
   from './action';
-import {errorHandle} from '../services/error-handle';
+import {handleError} from '../services/error-handle';
 import {saveToken, dropToken} from '../services/token';
 
 export const fetchHotelsAction = createAsyncThunk(
@@ -25,7 +25,7 @@ export const fetchHotelsAction = createAsyncThunk(
       const {data} = await api.get<Offers>(APIRoute.Hotels);
       store.dispatch(loadOffers(data));
     } catch (error) {
-      errorHandle(error);
+      handleError(error);
     }
   },
 );
@@ -37,7 +37,7 @@ export const fetchOfferIdAction = createAsyncThunk(
       const {data} = await api.get<Offer>(`${APIRoute.Hotels}/${id}`);
       store.dispatch(loadOfferId(data));
     } catch (error) {
-      errorHandle(error);
+      handleError(error);
       store.dispatch(redirectToRoute(AppRoute.NotFound));
     }
   },
@@ -50,7 +50,7 @@ export const fetchCommentsAction = createAsyncThunk(
       const {data} = await api.get<Comments>(`${APIRoute.Comments}/${id}`);
       store.dispatch(loadComments(data));
     } catch (error) {
-      errorHandle(error);
+      handleError(error);
     }
   },
 );
@@ -62,7 +62,7 @@ export const fetchNewCommentAction = createAsyncThunk(
       await api.post<Comment>(`${APIRoute.Comments}/${offerId}`, {rating, comment});
       store.dispatch(fetchCommentsAction(offerId));
     } catch (error) {
-      errorHandle(error);
+      handleError(error);
     }
   },
 );
@@ -74,7 +74,7 @@ export const fetchOtherOffersAction = createAsyncThunk(
       const {data} = await api.get<Offers>(`${APIRoute.Hotels}/${id}/nearby`);
       store.dispatch(loadOtherOffers(data));
     } catch (error) {
-      errorHandle(error);
+      handleError(error);
     }
   },
 );
@@ -86,7 +86,7 @@ export const checkAuthAction = createAsyncThunk(
       await api.get(APIRoute.Login);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch(error) {
-      errorHandle(error);
+      handleError(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },
@@ -102,7 +102,7 @@ export const loginAction = createAsyncThunk(
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
       store.dispatch(redirectToRoute(AppRoute.Main));
     } catch (error) {
-      errorHandle(error);
+      handleError(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },
@@ -116,7 +116,7 @@ export const logoutAction = createAsyncThunk(
       dropToken();
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     } catch (error) {
-      errorHandle(error);
+      handleError(error);
     }
   },
 );

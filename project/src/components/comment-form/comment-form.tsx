@@ -1,7 +1,7 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
+import { useAppDispatch } from '../../hooks';
 import {RatingsValues} from '../../const';
 import RatingItem from '../rating-item/rating-item';
-import {store} from '../../store/index';
 import {fetchNewCommentAction} from '../../store/api-actions';
 
 const MIN_COMMENT_LENGTH = 50;
@@ -13,6 +13,8 @@ type CommentFormProps = {
 }
 
 function CommentForm({className, currentOfferId}: CommentFormProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const [newComment, setNewComment] = useState({
     offerId: currentOfferId,
     rating: 0,
@@ -39,7 +41,7 @@ function CommentForm({className, currentOfferId}: CommentFormProps): JSX.Element
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    store.dispatch(fetchNewCommentAction(newComment));
+    dispatch(fetchNewCommentAction(newComment));
     setNewComment({...newComment, rating: 0, comment: ''});
   };
 
