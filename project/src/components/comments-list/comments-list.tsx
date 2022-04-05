@@ -1,4 +1,3 @@
-import CommentForm from '../../components/comment-form/comment-form';
 import CommentItem from '../../components/comment-item/comment-item';
 import {Comments} from '../../types/comments';
 
@@ -14,7 +13,6 @@ function CommentsList({className, comments}: CommentsListProps): JSX.Element {
       <ul className="reviews__list">
         {comments.map((comment) => <CommentItem className="reviews__item" commentData={comment} key={comment.id} />)}
       </ul>
-      <CommentForm className="reviews__form" />
     </section>
   );
 }

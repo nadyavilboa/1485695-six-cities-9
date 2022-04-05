@@ -3,10 +3,10 @@ import {ChangeEvent} from 'react';
 type RatingItemProps = {
   title: string;
   value: number;
-  handleFieldChange: (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange: (evt: ChangeEvent<HTMLInputElement>) => void;
 }
 
-function RatingItem({title, value, handleFieldChange}: RatingItemProps): JSX.Element {
+function RatingItem({title, value, onChange}: RatingItemProps): JSX.Element {
   return (
     <>
       <input
@@ -15,7 +15,7 @@ function RatingItem({title, value, handleFieldChange}: RatingItemProps): JSX.Ele
         value={value}
         id={`${value}'-stars'`}
         type="radio"
-        onChange={handleFieldChange}
+        onChange={onChange}
       />
       <label
         htmlFor={`${value}'-stars'`}
