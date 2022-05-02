@@ -2,36 +2,18 @@ import Sort from '../../components/sort/sort';
 import PlacesList from '../../components/places-list/places-list';
 import Map from '../../components/map/map';
 import {Offers} from '../../types/offers';
-import {Offer} from '../../types/offers';
-import {SortTypes} from '../../const';
 import {useState} from 'react';
-
-const sortOffers = (offers: Offer[], sort: string) => {
-  switch (sort) {
-    case SortTypes.PRICE_ASC:
-      return offers.sort((a: Offer, b: Offer) => a.price - b.price);
-    case SortTypes.PRICE_DESC:
-      return offers.sort((a: Offer, b: Offer) => b.price - a.price);
-    case SortTypes.TOP_RATED:
-      return offers.sort((a: Offer, b: Offer) => a.rating - b.rating);
-    default:
-      return offers;
-  }
-};
+import {useAppSelector} from '../../hooks';
 
 type MainCitiesProps = {
   cityOffers: Offers;
-  activeCity: string;
-  activeSort: string;
 }
 
 function MainCities({
   cityOffers,
-  activeCity,
-  activeSort,
 }: MainCitiesProps): JSX.Element {
-  const sortedOffers = sortOffers(cityOffers, activeSort);
   const [activeOffer, setActiveOffer] = useState<number | undefined>(undefined);
+  const {activeCity, activeSort, sortedOffers} = useAppSelector((state) => state);
 
   const handleOnMouseOver = (cardId: number | undefined) => {
     setActiveOffer(cardId);

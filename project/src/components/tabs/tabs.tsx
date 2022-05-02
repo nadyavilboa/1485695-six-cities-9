@@ -1,11 +1,7 @@
 import TabsItem from '../tabs-item/tabs-item';
 import {CITIES} from '../../const';
 
-type TabsProps = {
-  activeCity: string;
-}
-
-function Tabs({activeCity}: TabsProps): JSX.Element {
+function Tabs(): JSX.Element {
   return (
     <div className="tabs">
       <section className="locations container">
@@ -15,7 +11,6 @@ function Tabs({activeCity}: TabsProps): JSX.Element {
               className="locations__item"
               cityName={city}
               key={city}
-              activeCity={activeCity}
             />),
           )}
         </ul>

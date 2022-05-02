@@ -120,3 +120,48 @@ export const logoutAction = createAsyncThunk(
     }
   },
 );
+
+export const addToFavoritesAction = createAsyncThunk(
+  'main/addOfferToFavorites',
+  async (userData: UserData) => {
+    try {
+      await api.post(
+        `${APIRoute.Favorite}/${userData.id}/1`, {
+          headers: {'X-Token': userData.token},
+        });
+      store.dispatch(fetchHotelsAction());
+    } catch (error) {
+      handleError(error);
+    }
+  },
+);
+
+export const deleteOfferFavorites = createAsyncThunk(
+  'main/deleteOfferFavorites',
+  async (userData: UserData) => {
+    try {
+      await api.post(
+        `${APIRoute.Favorite}/${userData.id}/1`, {
+          headers: {'X-Token': userData.token},
+        });
+      store.dispatch(fetchHotelsAction());
+    } catch (error) {
+      handleError(error);
+    }
+  },
+);
+
+export const loadFavoritesOffers = createAsyncThunk(
+  'main/loadFavoritesOffers',
+  async (userData: UserData) => {
+    try {
+      const {data} = await api.get<Offers>(
+        APIRoute.Favorite, {
+          headers: {'X-Token': userData.token},
+        });
+      store.dispatch(loadFavoritesOffers(data));
+    } catch (error) {
+      handleError(error);
+    }
+  },
+);

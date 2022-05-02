@@ -44,3 +44,9 @@ export const SortTypes = {
   PRICE_DESC: 'Price: high to low',
   TOP_RATED: 'Top rated first',
 };
+
+export enum NameSpace {
+  data = 'DATA',
+  app = 'APP',
+  user = 'USER',
+}

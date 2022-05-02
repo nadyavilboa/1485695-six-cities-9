@@ -10,10 +10,10 @@ import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 function App(): JSX.Element {
-  const {isDataLoaded} = useAppSelector((state) => state);
+  const {isLoading} = useAppSelector((state) => state);
   const {authorizationStatus} = useAppSelector((state) => state);
 
-  if (!isDataLoaded) {
+  if (!isLoading) {
     return (
       <LoadingScreen />
     );

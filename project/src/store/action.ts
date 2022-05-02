@@ -44,3 +44,15 @@ export const redirectToRoute = createAction('redirectToRoute', (value: AppRoute)
 export const saveUserData = createAction('user/saveUserData', (data: UserData) => ({
   payload: data,
 }));
+
+export const loadFavoritesOffers = createAction('main/loadFavoritesOffers', (data: Offers) => ({
+  payload: data,
+}));
+
+export const addOfferToFavorites = createAction('main/addOfferToFavorites', (data: UserData) => ({
+  payload: data,
+}));
+
+export const deleteOfferFavorites = createAction('main/deleteOfferFavorites', (data: UserData) => ({
+  payload: data,
+}));
