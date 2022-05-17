@@ -3,6 +3,7 @@ import {FormEvent, useRef, useState} from 'react';
 import Logo from '../../components/logo/logo';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
+import {selectCity} from '../../store/app-process/selectors';
 
 import styles from './login.module.css';
 
@@ -19,6 +20,7 @@ enum ValidateValues {
 }
 
 function Login(): JSX.Element {
+  const activeCity = useAppSelector(selectCity);
   const [validateStatus, setValidateStatus] = useState({
     email: ValidateValues.Unknown,
     password: ValidateValues.Unknown,
@@ -26,8 +28,6 @@ function Login(): JSX.Element {
 
   const isCorrect = () => Object.values(validateStatus)
     .every((el) => el === ValidateValues.Correct);
-
-  const {city} = useAppSelector((state) => state);
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -132,7 +132,7 @@ function Login(): JSX.Element {
                 href="#"
                 onClick={(evt) => evt.preventDefault()}
               >
-                <span>{city}</span>
+                <span>{activeCity}</span>
               </a>
             </div>
           </section>

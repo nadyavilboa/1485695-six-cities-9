@@ -1,4 +1,4 @@
-function LoadingScreen(): JSX.Element {
+function Loader(): JSX.Element {
   return (
     <div
       style={{
@@ -22,4 +22,4 @@ function LoadingScreen(): JSX.Element {
   );
 }
 
-export default LoadingScreen;
+export default Loader;

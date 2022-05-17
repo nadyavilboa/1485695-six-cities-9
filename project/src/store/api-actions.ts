@@ -7,7 +7,6 @@ import {Comments, Comment, NewComment} from '../types/comments';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {
-  loadOffers,
   loadOfferId,
   loadOtherOffers,
   loadComments,
@@ -17,18 +16,6 @@ import {
   from './action';
 import {handleError} from '../services/error-handle';
 import {saveToken, dropToken} from '../services/token';
-
-export const fetchHotelsAction = createAsyncThunk(
-  'data/loadOffers',
-  async () => {
-    try {
-      const {data} = await api.get<Offers>(APIRoute.Hotels);
-      store.dispatch(loadOffers(data));
-    } catch (error) {
-      handleError(error);
-    }
-  },
-);
 
 export const fetchOfferIdAction = createAsyncThunk(
   'data/loadOfferId',
@@ -121,7 +108,7 @@ export const logoutAction = createAsyncThunk(
   },
 );
 
-export const addToFavoritesAction = createAsyncThunk(
+/*export const addToFavoritesAction = createAsyncThunk(
   'main/addOfferToFavorites',
   async (userData: UserData) => {
     try {
@@ -164,4 +151,4 @@ export const loadFavoritesOffers = createAsyncThunk(
       handleError(error);
     }
   },
-);
+);*/

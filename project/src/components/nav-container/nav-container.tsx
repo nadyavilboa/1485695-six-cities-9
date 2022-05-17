@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import SignOut from '../sign-out/sign-out';
 import {useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../const';
+import {selectAuthStatus, userData} from '../../store/user-process/selectors';
 
 type NavContainerProps = {
   className: string;
@@ -11,12 +12,12 @@ type NavContainerProps = {
 const DEFAULT_AVATAR_URL = '../img/avatar.svg';
 
 function NavContainer({className}: NavContainerProps): JSX.Element {
-  const {authorizationStatus} = useAppSelector((state) => state);
-  const {userData} = useAppSelector((state) => state);
+  const authStatus = useAppSelector(selectAuthStatus);
+  const userInfo = useAppSelector(userData);
 
-  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const isAuth = authStatus === AuthorizationStatus.Auth;
 
-  const avatarUrl = isAuth && userData?.avatarUrl ? userData.avatarUrl : DEFAULT_AVATAR_URL;
+  const avatarUrl = isAuth && userInfo?.avatarUrl ? userInfo.avatarUrl : DEFAULT_AVATAR_URL;
 
   return (
     <nav className={className}>
@@ -28,7 +29,7 @@ function NavContainer({className}: NavContainerProps): JSX.Element {
               style={{backgroundImage: `url(${avatarUrl})`}}
             />
             <span className="header__user-name user__name">
-              {isAuth ? userData?.email : 'Sign in'}
+              {isAuth ? userInfo?.email : 'Sign in'}
             </span>
           </Link>
         </li>

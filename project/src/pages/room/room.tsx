@@ -8,7 +8,7 @@ import {getWidthValue} from '../../utils/utils';
 import CommentsList from '../../components/comments-list/comments-list';
 import Map from '../../components/map/map';
 import PlacesList from '../../components/places-list/places-list';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
+import LoadingScreen from '../../components/loader/loader';
 import CommentForm from '../../components/comment-form/comment-form';
 import {AuthorizationStatus} from '../../const';
 import {fetchOfferIdAction, fetchCommentsAction, fetchOtherOffersAction} from '../../store/api-actions';

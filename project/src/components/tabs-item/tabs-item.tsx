@@ -1,5 +1,6 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {setCity} from '../../store/action';
+import {selectCity} from '../../store/app-process/selectors';
 
 type TabsItemProps = {
   className: string;
@@ -7,7 +8,7 @@ type TabsItemProps = {
 }
 
 function TabsItem({className, cityName}: TabsItemProps): JSX.Element {
-  const activeCity = useAppSelector((state) => state.city);
+  const activeCity = useAppSelector(selectCity);
   const dispatch = useAppDispatch();
 
   return (

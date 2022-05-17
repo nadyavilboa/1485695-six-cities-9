@@ -1,10 +1,14 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {SortTypes} from '../../const';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {AxiosInstance} from 'axios';
+import {APIRoute, FetchStatus, SortTypes} from '../../const';
+import {handleError} from '../../services/error-handle';
 import {Comments} from '../../types/comments';
 import {Offers, Offer} from '../../types/offers';
+import {AppDispatch, State} from '../../types/state';
 
 interface InitialState {
   offersData: Offers,
+  offersFetchStatus: FetchStatus,
   activeSort: string,
   sortedOffers: Offers,
   currentOffer: Offer | null,
@@ -14,10 +18,28 @@ interface InitialState {
   commentsData: Comments,
 }
 
-export const dataProcess = createSlice({
+export const fetchHotels = createAsyncThunk<Offer[], undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchHotels',
+  async (_arg, {extra: api, rejectWithValue}) => {
+    try {
+      const {data} = await api.get<Offers>(APIRoute.Hotels);
+      return data;
+    } catch (error) {
+      handleError(error);
+      throw error;
+    }
+  },
+);
+
+const dataProcess = createSlice({
   name: 'data',
   initialState: {
     offersData: [],
+    offersFetchStatus: FetchStatus.Idle,
     activeSort: SortTypes.POPULAR,
     sortedOffers: [],
     currentOffer: null,
@@ -27,12 +49,6 @@ export const dataProcess = createSlice({
     commentsData: [],
   } as InitialState,
   reducers: {
-    loadOffers: (state, action) => {
-      state.offersData = action.payload;
-    },
-    changeIsLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
     getSortedOffers: (state, action) => {
       const offers = action.payload.slice();
       if(offers === undefined) {
@@ -68,15 +84,21 @@ export const dataProcess = createSlice({
       state.commentsData = action.payload;
     },
   },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchHotels.pending, (state) => {
+        state.offersFetchStatus = FetchStatus.Loading;
+      })
+      .addCase(fetchHotels.fulfilled, (state, action) => {
+        state.offersFetchStatus = FetchStatus.Succeeded;
+        state.offersData = action.payload;
+      })
+      .addCase(fetchHotels.rejected, (state) => {
+        state.offersFetchStatus = FetchStatus.Failed;
+      });
+  },
 });
 
-export const {
-  loadOffers,
-  changeIsLoading,
-  getSortedOffers,
-  changeCurrentOffer,
-  changeSort,
-  changeFavorites,
-  getOtherOffers,
-  getComments,
-} = dataProcess.actions;
+const {reducer} = dataProcess;
+
+export default reducer;
