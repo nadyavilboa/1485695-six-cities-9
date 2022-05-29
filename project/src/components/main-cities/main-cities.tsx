@@ -3,9 +3,8 @@ import PlacesList from '../../components/places-list/places-list';
 import Map from '../../components/map/map';
 import {Offers} from '../../types/offers';
 import {useState} from 'react';
-import {useAppSelector} from '../../hooks';
-import { selectCity } from '../../store/app-process/selectors';
-import { selectSort } from '../../store/data-process/selectors';
+import {selectCity, selectSort} from '../../store/app-process/selectors';
+import { useAppSelector } from '../../hooks';
 
 type MainCitiesProps = {
   cityOffers: Offers;
@@ -15,8 +14,8 @@ function MainCities({
   cityOffers,
 }: MainCitiesProps): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<number | undefined>(undefined);
-  const activeCity = useAppSelector(selectCity);
   const activeSort = useAppSelector(selectSort);
+  const activeCity = useAppSelector(selectCity);
 
   const handleOnMouseOver = (cardId: number | undefined) => {
     setActiveOffer(cardId);
@@ -29,7 +28,7 @@ function MainCities({
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{cityOffers.length} places to stay in {activeCity}</b>
-            {<Sort activeSort={activeSort} />}
+            <Sort activeSort={activeSort} />
             <PlacesList
               className="cities__places-list"
               offers={cityOffers}

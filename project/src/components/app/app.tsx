@@ -2,7 +2,7 @@ import {Route, Routes} from 'react-router-dom';
 import Main from '../../pages/main/main';
 import NotFound from '../../pages/not-found/not-found';
 import Login from '../../pages/login/login';
-//import Room from '../../pages/room/room';
+import Room from '../../pages/room/room';
 import Favorites from '../../pages/favorites/favorites';
 import PrivateRoute from '../private-route/private-route';
 import {AppRoute} from '../../const';
@@ -18,10 +18,10 @@ function App(): JSX.Element {
         path={AppRoute.SignIn}
         element={<Login />}
       />
-      {/*<Route
+      <Route
         path={`${AppRoute.Room}/:id`}
         element={<Room />}
-      />*/}
+      />
       <Route
         path={AppRoute.Favorites}
         element={

@@ -8,7 +8,7 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HistoryRoute from './components/history-route/history-route';
 import browserHistory from './browser-history';
-import {fetchHotels} from './store/data-process/data-process';
+import {fetchHotels} from './store/offers-process/offers-process';
 
 store.dispatch(fetchHotels());
 store.dispatch(checkAuthAction());

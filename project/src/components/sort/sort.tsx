@@ -1,16 +1,14 @@
 import {SortTypes} from '../../const';
 import {useState} from 'react';
 import {useAppDispatch} from '../../hooks';
-import {setSort} from '../../store/action';
+import {changeSort} from '../../store/app-process/app-process';
 
 type SortProps = {
-  activeSort: string;
+  activeSort: string | undefined;
 }
 
 function Sort({activeSort}: SortProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
-
-  const sortClickHandler = () => setIsOpen(!isOpen);
 
   const dispatch = useAppDispatch();
 
@@ -19,7 +17,7 @@ function Sort({activeSort}: SortProps): JSX.Element {
       className="places__sorting"
       action="#"
       method="get"
-      onClick={sortClickHandler}
+      onClick={() => setIsOpen(!isOpen)}
     >
       <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex={0} >
@@ -34,10 +32,7 @@ function Sort({activeSort}: SortProps): JSX.Element {
             className={`places__option ${sortType === activeSort && 'places__option--active'}`}
             tabIndex={0}
             key={sortType}
-            onClick={() => {
-              sortClickHandler();
-              dispatch(setSort(sortType));
-            }}
+            onClick={() => dispatch(changeSort(sortType))}
           >
             {sortType}
           </li>

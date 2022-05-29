@@ -20,6 +20,8 @@ function PlaceCard({
 }: PlaceCardProps): JSX.Element {
   const {isPremium, id, previewImage, title, price, isFavorite, rating, type} = offer;
 
+  const transformFirstSymbol = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
   return (
     <article
       className={`${className} place-card`}
@@ -49,7 +51,7 @@ function PlaceCard({
         <h2 className="place-card__name">
           <Link to={`${AppRoute.Room}/:${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{transformFirstSymbol(type)}</p>
       </div>
     </article>
   );

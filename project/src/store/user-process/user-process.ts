@@ -1,18 +1,20 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AuthorizationStatus} from '../../const';
-import { UserData } from '../../types/user-data';
+import {UserData} from '../../types/user-data';
 
 interface InitialState {
   authorizationStatus: string,
   userData: UserData | null,
 }
 
+const initialState: InitialState = {
+  authorizationStatus: AuthorizationStatus.Unknown,
+  userData: null,
+};
+
 export const userProcess = createSlice({
   name: 'user',
-  initialState: {
-    authorizationStatus: AuthorizationStatus.Unknown,
-    userData: null,
-  } as InitialState,
+  initialState,
   reducers: {
     changeAuthStatus: (state, action) => {
       state.authorizationStatus = action.payload;
@@ -23,4 +25,6 @@ export const userProcess = createSlice({
   },
 });
 
-export const {changeAuthStatus, changeData} = userProcess.actions;
+const {reducer} = userProcess;
+
+export default reducer;

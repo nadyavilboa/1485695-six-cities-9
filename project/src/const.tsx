@@ -46,7 +46,7 @@ export const SortTypes = {
 };
 
 export enum NameSpace {
-  Data = 'DATA',
+  Offers = 'OFFERS',
   App = 'APP',
   User = 'USER',
 }
