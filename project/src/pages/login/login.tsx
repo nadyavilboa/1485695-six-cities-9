@@ -1,9 +1,11 @@
 import cn from 'classnames';
 import {FormEvent, useRef, useState} from 'react';
 import Logo from '../../components/logo/logo';
+import { AppRoute } from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {loginAction} from '../../store/api-actions';
+import {redirectToRoute} from '../../store/action';
 import {selectCity} from '../../store/app-process/selectors';
+import {fetchLogin} from '../../store/user-process/user-process';
 
 import styles from './login.module.css';
 
@@ -60,10 +62,11 @@ function Login(): JSX.Element {
     if (loginRef.current !== null &&
       passwordRef.current !== null &&
       isCorrect) {
-      dispatch(loginAction({
+      dispatch(fetchLogin({
         login: loginRef.current.value,
         password: passwordRef.current.value,
       }));
+      dispatch(redirectToRoute(AppRoute.Main));
     }
   };
 

@@ -11,6 +11,7 @@ export const selectOffers = (state: State) => selectOffersState(state).offersDat
 export const selectOffersStatus = (state: State) => selectOffersState(state).offersFetchStatus;
 
 export const currentOffer = (state: State) => selectOffersState(state).currentOffer;
+export const currentOfferFetchStatus = (state: State) => selectOffersState(state).currentOfferFetchStatus;
 
 export const otherOffers = (state: State) => selectOffersState(state).otherOffers;
 

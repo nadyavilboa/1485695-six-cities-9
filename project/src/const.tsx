@@ -47,11 +47,19 @@ export const SortTypes = {
 
 export enum NameSpace {
   Offers = 'OFFERS',
+  Comments = 'COMMENTS',
   App = 'APP',
   User = 'USER',
 }
 
 export enum FetchStatus {
+  Idle = 'idle',
+  Loading = 'loading',
+  Succeeded = 'succeeded',
+  Failed = 'failed',
+}
+
+export enum SendStatus {
   Idle = 'idle',
   Loading = 'loading',
   Succeeded = 'succeeded',

@@ -1,5 +1,5 @@
 import {useAppDispatch} from '../../hooks';
-import {logoutAction} from '../../store/api-actions';
+import {fetchLogout} from '../../store/user-process/user-process';
 
 type NavContainerProps = {
   className: string;
@@ -15,7 +15,7 @@ function SignOut({className}: NavContainerProps): JSX.Element {
         href="#"
         onClick={(evt) => {
           evt.preventDefault();
-          dispatch(logoutAction());
+          dispatch(fetchLogout());
         }}
       >
         <span className="header__signout">Sign out</span>

@@ -1,33 +1,24 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
-import {APIRoute, FetchStatus, SortTypes} from '../../const';
+import {APIRoute, FetchStatus} from '../../const';
 import {handleError} from '../../services/error-handle';
-import {Comments} from '../../types/comments';
 import {Offers, Offer} from '../../types/offers';
 import {AppDispatch, State} from '../../types/state';
 
 interface InitialState {
   offersData: Offers,
   offersFetchStatus: FetchStatus,
-  activeSort: string,
-  sortedOffers: Offers,
+  currentOfferFetchStatus: FetchStatus,
   currentOffer: Offer | null,
-  isLoading: boolean,
-  favoritesOffers: Offers,
   otherOffers: Offers,
-  commentsData: Comments,
 }
 
 const initialState: InitialState = {
   offersData: [],
   offersFetchStatus: FetchStatus.Idle,
-  activeSort: SortTypes.POPULAR,
-  sortedOffers: [],
+  currentOfferFetchStatus: FetchStatus.Idle,
   currentOffer: null,
-  isLoading: true,
-  favoritesOffers: [],
   otherOffers: [],
-  commentsData: [],
 };
 
 export const fetchHotels = createAsyncThunk<Offer[], undefined, {
@@ -38,7 +29,7 @@ export const fetchHotels = createAsyncThunk<Offer[], undefined, {
   'data/fetchHotels',
   async (_arg, {extra: api}) => {
     try {
-      const {data} = await api.get<Offers>(APIRoute.Hotels);
+      const {data} = await api.get<Offer[]>(APIRoute.Hotels);
       return data;
     } catch (error) {
       handleError(error);
@@ -99,14 +90,14 @@ const offersProcess = createSlice({
         state.offersFetchStatus = FetchStatus.Failed;
       })
       .addCase(fetchCurrentOffer.pending, (state) => {
-        state.offersFetchStatus = FetchStatus.Loading;
+        state.currentOfferFetchStatus = FetchStatus.Loading;
       })
       .addCase(fetchCurrentOffer.fulfilled, (state, action) => {
-        state.offersFetchStatus = FetchStatus.Succeeded;
+        state.currentOfferFetchStatus = FetchStatus.Succeeded;
         state.currentOffer = action.payload;
       })
       .addCase(fetchCurrentOffer.rejected, (state) => {
-        state.offersFetchStatus = FetchStatus.Failed;
+        state.currentOfferFetchStatus = FetchStatus.Failed;
       })
       .addCase(fetchOtherOffers.fulfilled, (state, action) => {
         state.otherOffers = action.payload;

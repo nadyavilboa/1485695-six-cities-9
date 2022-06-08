@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import SignOut from '../sign-out/sign-out';
 import {useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../const';
-import {selectAuthStatus, userData} from '../../store/user-process/selectors';
+import {checkAuthStatus, userData} from '../../store/user-process/selectors';
 
 type NavContainerProps = {
   className: string;
@@ -12,10 +12,14 @@ type NavContainerProps = {
 const DEFAULT_AVATAR_URL = '../img/avatar.svg';
 
 function NavContainer({className}: NavContainerProps): JSX.Element {
-  const authStatus = useAppSelector(selectAuthStatus);
+  const authStatus = useAppSelector(checkAuthStatus);
   const userInfo = useAppSelector(userData);
 
   const isAuth = authStatus === AuthorizationStatus.Auth;
+  // eslint-disable-next-line no-console
+  console.log(isAuth);
+  // eslint-disable-next-line no-console
+  console.log(userInfo);
 
   const avatarUrl = isAuth && userInfo?.avatarUrl ? userInfo.avatarUrl : DEFAULT_AVATAR_URL;
 

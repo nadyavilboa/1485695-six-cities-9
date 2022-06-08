@@ -5,16 +5,19 @@ import Header from '../../components/header/header';
 import Badge from '../../components/badge/badge';
 import Bookmark from '../../components/bookmark/bookmark';
 import {getWidthValue} from '../../utils/utils';
-//import CommentsList from '../../components/comments-list/comments-list';
+import CommentsList from '../../components/comments-list/comments-list';
 import Map from '../../components/map/map';
 import PlacesList from '../../components/places-list/places-list';
 import Loader from '../../components/loader/loader';
 import CommentForm from '../../components/comment-form/comment-form';
 import {AuthorizationStatus} from '../../const';
-import {currentOffer, selectOffersStatus, otherOffers} from '../../store/offers-process/selectors';
+import {currentOffer, currentOfferFetchStatus, otherOffers} from '../../store/offers-process/selectors';
+import {selectComments} from '../../store/comments-process/selectors';
 import {FetchStatus} from '../../const';
-import {fetchCurrentOffer} from '../../store/offers-process/offers-process';
-import {selectAuthStatus} from '../../store/user-process/selectors';
+import {fetchCurrentOffer, fetchOtherOffers} from '../../store/offers-process/offers-process';
+import {checkAuthStatus} from '../../store/user-process/selectors';
+import {store} from '../../store';
+import {fetchComments} from '../../store/comments-process/comments-process';
 
 const AMOUNT_IMAGES = 6;
 
@@ -29,21 +32,27 @@ function Room(): JSX.Element {
   }, [currentId, dispatch]);
 
   const offer = useAppSelector(currentOffer);
-  const status = useAppSelector(selectOffersStatus);
+  const status = useAppSelector(currentOfferFetchStatus);
 
-  const authStatus = useAppSelector(selectAuthStatus);
+  const authStatus = useAppSelector(checkAuthStatus);
+
+  store.dispatch(fetchOtherOffers(currentId));
+
+  store.dispatch(fetchComments(currentId));
 
   const nearbyOffers = useAppSelector(otherOffers);
+
+  const comments = useAppSelector(selectComments);
+
+  if (status === FetchStatus.Failed) {
+    return (
+      <b>Something went wrong, please try again later</b>
+    );
+  }
 
   if ([FetchStatus.Idle, FetchStatus.Loading].includes(status) || !offer) {
     return (
       <Loader />
-    );
-  }
-
-  if (FetchStatus.Failed && !offer) {
-    return (
-      <b>Something went wrong, please try again later</b>
     );
   }
 
@@ -55,8 +64,8 @@ function Room(): JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {offer.images.slice(0, AMOUNT_IMAGES).map((image) => (
-                <div className="property__image-wrapper" key={offer.id}>
-                  <img className="property__image" src={image} alt="Photo studio" />
+                <div className="property__image-wrapper" key={image}>
+                  <img className="property__image" src={image} alt={offer.title} />
                 </div>),
               )}
             </div>
@@ -96,7 +105,7 @@ function Room(): JSX.Element {
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {offer.goods.map((item) => (
-                    <li className="property__inside-item" key={offer.id}>
+                    <li className="property__inside-item" key={item}>
                       {item}
                     </li>),
                   )}
@@ -121,9 +130,9 @@ function Room(): JSX.Element {
                   </p>
                 </div>
               </div>
-              {/*comments !== null && (
-                  <CommentsList className="property__reviews" comments={comments} />
-                )*/}
+              {comments !== null && (
+                <CommentsList className="property__reviews" comments={comments} />
+              )}
               {authStatus === AuthorizationStatus.Auth && (
                 <CommentForm className="reviews__form" currentOfferId={currentId} />
               )}
