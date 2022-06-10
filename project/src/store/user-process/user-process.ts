@@ -29,6 +29,7 @@ export const fetchCheckAuth = createAsyncThunk<UserData, undefined, {
       return data;
     } catch(error) {
       handleError(error);
+      throw error;
     }
   },
 );
@@ -83,8 +84,9 @@ export const userProcess = createSlice({
       .addCase(fetchLogin.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
-      .addCase(fetchCheckAuth.fulfilled, (state) => {
+      .addCase(fetchCheckAuth.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
+        state.userData = action.payload;
       })
       .addCase(fetchCheckAuth.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
