@@ -1,14 +1,11 @@
-import {useAppDispatch} from '../../hooks';
-import {setCity} from '../../store/action';
-
 type TabsItemProps = {
   className: string;
-  cityName: string;
   activeCity: string;
+  cityName: string;
+  onCityClick: (city: string) => void;
 }
 
-function TabsItem({className, cityName, activeCity}: TabsItemProps): JSX.Element {
-  const dispatch = useAppDispatch();
+function TabsItem({className, activeCity, cityName, onCityClick}: TabsItemProps): JSX.Element {
 
   return (
     <li className={className}>
@@ -17,7 +14,7 @@ function TabsItem({className, cityName, activeCity}: TabsItemProps): JSX.Element
         href="#"
         onClick={(evt) => {
           evt.preventDefault();
-          dispatch(setCity(cityName));
+          onCityClick(cityName);
         }}
       >
         <span>{cityName}</span>

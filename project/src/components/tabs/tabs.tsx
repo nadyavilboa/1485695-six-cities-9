@@ -1,11 +1,14 @@
 import TabsItem from '../tabs-item/tabs-item';
 import {CITIES} from '../../const';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {selectCity} from '../../store/app-process/selectors';
+import {changeCity} from '../../store/app-process/app-process';
 
-type TabsProps = {
-  activeCity: string;
-}
+function Tabs(): JSX.Element {
+  const activeCity = useAppSelector(selectCity);
 
-function Tabs({activeCity}: TabsProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="tabs">
       <section className="locations container">
@@ -14,8 +17,9 @@ function Tabs({activeCity}: TabsProps): JSX.Element {
             <TabsItem
               className="locations__item"
               cityName={city}
-              key={city}
               activeCity={activeCity}
+              onCityClick={() => dispatch(changeCity(city))}
+              key={city}
             />),
           )}
         </ul>

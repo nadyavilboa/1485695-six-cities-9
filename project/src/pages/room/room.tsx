@@ -8,32 +8,51 @@ import {getWidthValue} from '../../utils/utils';
 import CommentsList from '../../components/comments-list/comments-list';
 import Map from '../../components/map/map';
 import PlacesList from '../../components/places-list/places-list';
-import LoadingScreen from '../../components/loading-screen/loading-screen';
+import Loader from '../../components/loader/loader';
 import CommentForm from '../../components/comment-form/comment-form';
 import {AuthorizationStatus} from '../../const';
-import {fetchOfferIdAction, fetchCommentsAction, fetchOtherOffersAction} from '../../store/api-actions';
+import {currentOffer, currentOfferFetchStatus, otherOffers} from '../../store/offers-process/selectors';
+import {selectComments} from '../../store/comments-process/selectors';
+import {FetchStatus} from '../../const';
+import {fetchCurrentOffer, fetchOtherOffers} from '../../store/offers-process/offers-process';
+import {checkAuthStatus} from '../../store/user-process/selectors';
+import {store} from '../../store';
+import {fetchComments} from '../../store/comments-process/comments-process';
 
 const AMOUNT_IMAGES = 6;
-const AMOUNT_OTHER_OFFERS = 3;
 
 function Room(): JSX.Element {
-  const params = useParams();
+  const {id} = useParams<{id:string}>();
   const dispatch = useAppDispatch();
 
-  const currentId = Number(params.id?.slice(1));
+  const currentId = Number(id);
 
   useEffect(() => {
-    dispatch(fetchOfferIdAction(currentId));
-    dispatch(fetchCommentsAction(currentId));
-    dispatch(fetchOtherOffersAction(currentId));
-  }, [currentId]);
+    dispatch(fetchCurrentOffer(currentId));
+  }, [currentId, dispatch]);
 
-  const {currentOffer, comments, authorizationStatus, otherOffers} = useAppSelector((state) => state);
-  const offers = otherOffers.slice(0, AMOUNT_OTHER_OFFERS);
+  const offer = useAppSelector(currentOffer);
+  const status = useAppSelector(currentOfferFetchStatus);
 
-  if (!currentOffer) {
+  const authStatus = useAppSelector(checkAuthStatus);
+
+  store.dispatch(fetchOtherOffers(currentId));
+
+  store.dispatch(fetchComments(currentId));
+
+  const nearbyOffers = useAppSelector(otherOffers);
+
+  const comments = useAppSelector(selectComments);
+
+  if (status === FetchStatus.Failed) {
     return (
-      <LoadingScreen />
+      <b>Something went wrong, please try again later</b>
+    );
+  }
+
+  if ([FetchStatus.Idle, FetchStatus.Loading].includes(status) || !offer) {
+    return (
+      <Loader />
     );
   }
 
@@ -44,49 +63,49 @@ function Room(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {currentOffer.images.slice(0, AMOUNT_IMAGES).map((image) => (
-                <div className="property__image-wrapper" key={currentOffer.id}>
-                  <img className="property__image" src={image} alt="Photo studio" />
+              {offer.images.slice(0, AMOUNT_IMAGES).map((image) => (
+                <div className="property__image-wrapper" key={image}>
+                  <img className="property__image" src={image} alt={offer.title} />
                 </div>),
               )}
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {currentOffer.isPremium && <Badge className="property__mark" />}
+              {offer.isPremium && <Badge className="property__mark" />}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {currentOffer.title}
+                  {offer.title}
                 </h1>
-                <Bookmark className="property" isFavorite={Boolean(currentOffer.isFavorite)} isRoom />
+                <Bookmark className="property" isFavorite={Boolean(offer.isFavorite)} isRoom />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: getWidthValue(Number(currentOffer.rating))}}></span>
+                  <span style={{width: getWidthValue(Number(offer.rating))}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{currentOffer.rating}</span>
+                <span className="property__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {currentOffer.type}
+                  {offer.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {currentOffer.bedrooms} Bedroom{currentOffer.bedrooms!==1&&'s'}
+                  {offer.bedrooms} Bedroom{offer.bedrooms!==1&&'s'}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {currentOffer.maxAdults} adults
+                    Max {offer.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{currentOffer.price}</b>
+                <b className="property__price-value">&euro;{offer.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {currentOffer.goods.map((item) => (
-                    <li className="property__inside-item" key={currentOffer.id}>
+                  {offer.goods.map((item) => (
+                    <li className="property__inside-item" key={item}>
                       {item}
                     </li>),
                   )}
@@ -96,26 +115,25 @@ function Room(): JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    {currentOffer.host.name}
+                    {offer.host.name}
                   </span>
                   <span className="property__user-status">
-                    {currentOffer.host.isPro&&'Pro'}
+                    {offer.host.isPro&&'Pro'}
                   </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    {currentOffer.description}
+                    {offer.description}
                   </p>
                 </div>
               </div>
               {comments !== null && (
                 <CommentsList className="property__reviews" comments={comments} />
               )}
-
-              {authorizationStatus === AuthorizationStatus.Auth && (
+              {authStatus === AuthorizationStatus.Auth && (
                 <CommentForm className="reviews__form" currentOfferId={currentId} />
               )}
             </div>
@@ -123,17 +141,17 @@ function Room(): JSX.Element {
           <section className="property__map map">
             <Map
               className="cities__map"
-              city={currentOffer.city}
-              offers={offers !== undefined ? [currentOffer, ...offers] : [currentOffer]}
-              currentPoint={currentOffer.id}
+              city={offer.city}
+              offers={nearbyOffers !== undefined ? [offer, ...nearbyOffers] : [offer]}
+              currentPoint={offer.id}
             />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            {offers !== undefined && (
-              <PlacesList className="near-places__list" offers={offers} isMain={false}/>
+            {nearbyOffers !== undefined && (
+              <PlacesList className="near-places__list" offers={nearbyOffers} isMain={false}/>
             )}
           </section>
         </div>

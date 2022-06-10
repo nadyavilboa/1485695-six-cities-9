@@ -1,8 +1,8 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
-import { useAppDispatch } from '../../hooks';
+import {useAppDispatch} from '../../hooks';
 import {RatingsValues} from '../../const';
 import RatingItem from '../rating-item/rating-item';
-import {fetchNewCommentAction} from '../../store/api-actions';
+import {fetchComments, postNewComment} from './../../store/comments-process/comments-process';
 
 const MIN_COMMENT_LENGTH = 50;
 const MAX_COMMENT_LENGTH = 300;
@@ -41,8 +41,9 @@ function CommentForm({className, currentOfferId}: CommentFormProps): JSX.Element
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(fetchNewCommentAction(newComment));
+    dispatch(postNewComment(newComment));
     setNewComment({...newComment, rating: 0, comment: ''});
+    dispatch(fetchComments(currentOfferId));
   };
 
   return (

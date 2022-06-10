@@ -20,6 +20,8 @@ function PlaceCard({
 }: PlaceCardProps): JSX.Element {
   const {isPremium, id, previewImage, title, price, isFavorite, rating, type} = offer;
 
+  const transformFirstSymbol = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
   return (
     <article
       className={`${className} place-card`}
@@ -28,7 +30,7 @@ function PlaceCard({
     >
       {isPremium && <Badge className="place-card__mark" />}
       <div className={`${isSmall ? 'favorites__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}>
-        <Link to={`${AppRoute.Room}/:${id}`}>
+        <Link to={`${AppRoute.Room}/${id}`}>
           <img className="place-card__image" src={previewImage} width={isSmall ? 150 : 260} height={isSmall ? 110 : 200} alt={title} />
         </Link>
       </div>
@@ -47,9 +49,9 @@ function PlaceCard({
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}/:${id}`}>{title}</Link>
+          <Link to={`${AppRoute.Room}/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{transformFirstSymbol(type)}</p>
       </div>
     </article>
   );

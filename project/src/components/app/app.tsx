@@ -6,19 +6,8 @@ import Room from '../../pages/room/room';
 import Favorites from '../../pages/favorites/favorites';
 import PrivateRoute from '../private-route/private-route';
 import {AppRoute} from '../../const';
-import {useAppSelector} from '../../hooks';
-import LoadingScreen from '../loading-screen/loading-screen';
 
 function App(): JSX.Element {
-  const {isDataLoaded} = useAppSelector((state) => state);
-  const {authorizationStatus} = useAppSelector((state) => state);
-
-  if (!isDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
-  }
-
   return (
     <Routes>
       <Route
@@ -36,7 +25,7 @@ function App(): JSX.Element {
       <Route
         path={AppRoute.Favorites}
         element={
-          <PrivateRoute authorizationStatus={authorizationStatus} >
+          <PrivateRoute authorizationStatus={'AUTH'} >
             <Favorites />
           </PrivateRoute>
         }
