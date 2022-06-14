@@ -40,7 +40,7 @@ function PlaceCard({
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <Bookmark className="place-card" isFavorite={isFavorite} isRoom={false} />
+          <Bookmark className="place-card" isFavorite={isFavorite} offerId={id} isRoom={false} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

@@ -77,7 +77,7 @@ function Room(): JSX.Element {
                 <h1 className="property__name">
                   {offer.title}
                 </h1>
-                <Bookmark className="property" isFavorite={Boolean(offer.isFavorite)} isRoom />
+                <Bookmark className="property" isFavorite={Boolean(offer.isFavorite)} offerId={currentId} isRoom />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">

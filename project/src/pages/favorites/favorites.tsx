@@ -1,9 +1,9 @@
 import FavoritesItem from '../../components/favorites-item/favorites-item';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import {Offers, Offer} from '../../types/offers';
-
-const isFavorites = (offer: Offer) => offer.isFavorite;
+import {useAppSelector} from '../../hooks';
+import {selectFavoritesOffers} from '../../store/favorites-process/selectors';
+import {Offers} from '../../types/offers';
 
 const mapOffersToCities = (offers: Offers) => offers.reduce<{[key: string]: Offers}>((acc, offer) => {
   const currentCity = offer.city.name;
@@ -15,10 +15,9 @@ const mapOffersToCities = (offers: Offers) => offers.reduce<{[key: string]: Offe
 }, {});
 
 function Favorites(): JSX.Element {
-  const offers:Offers = [];  //внимание, здесь времянка (заглушка)
+  const favoritesOffers = useAppSelector(selectFavoritesOffers);
 
-  const filterOffers = offers.filter(isFavorites);
-  const groupOffers = mapOffersToCities(filterOffers);
+  const groupOffers = mapOffersToCities(favoritesOffers);
   return (
     <div className="page">
       <Header />

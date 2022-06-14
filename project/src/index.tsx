@@ -9,9 +9,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import HistoryRoute from './components/history-route/history-route';
 import browserHistory from './browser-history';
 import {fetchHotels} from './store/offers-process/offers-process';
+import { fetchFavoritesHotels } from './store/favorites-process/favorites-process';
 
 store.dispatch(fetchHotels());
 store.dispatch(fetchCheckAuth());
+store.dispatch(fetchFavoritesHotels());
 
 ReactDOM.render(
   <React.StrictMode>
