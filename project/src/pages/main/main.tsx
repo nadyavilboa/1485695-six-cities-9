@@ -4,11 +4,11 @@ import Tabs from '../../components/tabs/tabs';
 import MainEmpty from '../../components/main-empty/main-empty';
 import MainCities from '../../components/main-cities/main-cities';
 import Loader from '../../components/loader/loader';
-import {selectOffers, selectOffersStatus} from '../../store/offers-process/selectors';
+import {selectCurrentOffers, selectOffersStatus} from '../../store/offers-process/selectors';
 import {FetchStatus} from '../../const';
 
 function Main(): JSX.Element {
-  const currentOffers = useAppSelector(selectOffers);
+  const currentOffers = useAppSelector(selectCurrentOffers);
   const status = useAppSelector(selectOffersStatus);
 
   const isError = status === FetchStatus.Failed;

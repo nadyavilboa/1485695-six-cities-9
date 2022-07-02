@@ -25,7 +25,7 @@ function NavContainer({className}: NavContainerProps): JSX.Element {
       <ul className="header__nav-list">
         <li className="header__nav-item user">
           <Link to={isAuth ? AppRoute.Favorites : AppRoute.SignIn} className="header__nav-link header__nav-link--profile">
-            <CountFavorites/>
+            {isAuth && <CountFavorites/>}
             <div
               className="header__avatar-wrapper user__avatar-wrapper"
               style={{backgroundImage: `url(${avatarUrl})`}}

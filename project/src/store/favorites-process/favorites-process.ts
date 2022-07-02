@@ -9,24 +9,24 @@ import {handleError} from '../../services/error-handle';
 
 interface InitialState {
   favoritesOffers: Offers,
-  offersFetchStatus: FetchStatus,
+  favoritesFetchStatus: FetchStatus,
   changeOffer: Offer | null,
   changeOfferStatus: FetchStatus,
 }
 
 const initialState: InitialState = {
   favoritesOffers: [],
-  offersFetchStatus: FetchStatus.Idle,
+  favoritesFetchStatus: FetchStatus.Idle,
   changeOffer: null,
   changeOfferStatus: FetchStatus.Idle,
 };
 
-export const fetchFavoritesHotels = createAsyncThunk<Offers, undefined, {
+export const fetchFavoritesHotels = createAsyncThunk<Offer[], undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
-  'data/fetchHotels',
+  'favorite/fetchFavoritesHotels',
   async (_arg, {extra: api}) => {
     try {
       const {data} = await api.get<Offer[]>(APIRoute.Favorite);
@@ -63,14 +63,14 @@ const favoritesProcess = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchFavoritesHotels.pending, (state) => {
-        state.offersFetchStatus = FetchStatus.Loading;
+        state.favoritesFetchStatus = FetchStatus.Loading;
       })
       .addCase(fetchFavoritesHotels.fulfilled, (state, action) => {
-        state.offersFetchStatus = FetchStatus.Succeeded;
+        state.favoritesFetchStatus = FetchStatus.Succeeded;
         state.favoritesOffers = action.payload;
       })
       .addCase(fetchFavoritesHotels.rejected, (state) => {
-        state.offersFetchStatus = FetchStatus.Failed;
+        state.favoritesFetchStatus = FetchStatus.Failed;
       })
       .addCase(postFavoriteStatus.pending, (state) => {
         state.changeOfferStatus = FetchStatus.Loading;

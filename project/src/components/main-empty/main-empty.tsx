@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../hooks';
+import {useAppSelector} from '../../hooks';
 import {selectCity} from '../../store/app-process/selectors';
 
 type MainEmptyProps = {
