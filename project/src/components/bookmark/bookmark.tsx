@@ -1,5 +1,8 @@
-import {useAppDispatch} from '../../hooks';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import { redirectToRoute } from '../../store/action';
 import {postFavoriteStatus} from '../../store/favorites-process/favorites-process';
+import { checkAuthStatus } from '../../store/user-process/selectors';
 
 type BookmarkProps = {
   className: string;
@@ -10,6 +13,7 @@ type BookmarkProps = {
 
 function Bookmark({className,isFavorite,offerId,isRoom}: BookmarkProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const authStatus = useAppSelector(checkAuthStatus);
 
   return (
     <button
@@ -17,7 +21,11 @@ function Bookmark({className,isFavorite,offerId,isRoom}: BookmarkProps): JSX.Ele
       type="button"
       onClick={(evt) => {
         evt.preventDefault();
-        dispatch(postFavoriteStatus({offerId, status: Number(!isFavorite)}));
+        if (authStatus === AuthorizationStatus.Auth) {
+          dispatch(postFavoriteStatus({offerId, status: Number(!isFavorite)}));
+        } else {
+          dispatch(redirectToRoute(AppRoute.SignIn));
+        }
       }}
     >
       <svg className={`${className}__bookmark-icon`} width={isRoom ? 31 : 18} height={isRoom ? 33 : 19}>

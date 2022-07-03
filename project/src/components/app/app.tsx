@@ -6,8 +6,21 @@ import Room from '../../pages/room/room';
 import Favorites from '../../pages/favorites/favorites';
 import PrivateRoute from '../private-route/private-route';
 import {AppRoute} from '../../const';
+import {useEffect} from 'react';
+import {useAppDispatch} from '../../hooks';
+import {fetchFavoritesHotels} from '../../store/favorites-process/favorites-process';
+import {fetchHotels} from '../../store/offers-process/offers-process';
+import {fetchCheckAuth} from '../../store/user-process/user-process';
 
 function App(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchHotels());
+    dispatch(fetchCheckAuth());
+    dispatch(fetchFavoritesHotels());
+  }, [dispatch]);
+
   return (
     <Routes>
       <Route

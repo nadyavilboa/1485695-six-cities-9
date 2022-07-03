@@ -10,14 +10,12 @@ import {handleError} from '../../services/error-handle';
 interface InitialState {
   favoritesOffers: Offers,
   favoritesFetchStatus: FetchStatus,
-  changeOffer: Offer | null,
   changeOfferStatus: FetchStatus,
 }
 
 const initialState: InitialState = {
   favoritesOffers: [],
   favoritesFetchStatus: FetchStatus.Idle,
-  changeOffer: null,
   changeOfferStatus: FetchStatus.Idle,
 };
 
@@ -77,7 +75,11 @@ const favoritesProcess = createSlice({
       })
       .addCase(postFavoriteStatus.fulfilled, (state, action) => {
         state.changeOfferStatus = FetchStatus.Succeeded;
-        state.changeOffer = action.payload;
+        if (action.payload.isFavorite) {
+          state.favoritesOffers.push(action.payload);
+        } else {
+          state.favoritesOffers = state.favoritesOffers.filter((item) => item.id !== action.payload.id);
+        }
       })
       .addCase(postFavoriteStatus.rejected, (state) => {
         state.changeOfferStatus = FetchStatus.Failed;
