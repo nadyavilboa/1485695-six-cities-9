@@ -4,6 +4,7 @@ import {APIRoute, FetchStatus} from '../../const';
 import {handleError} from '../../services/error-handle';
 import {Offers, Offer} from '../../types/offers';
 import {AppDispatch, State} from '../../types/state';
+import { postFavoriteStatus } from '../favorites-process/favorites-process';
 
 interface InitialState {
   offersData: Offers,
@@ -19,6 +20,18 @@ const initialState: InitialState = {
   currentOfferFetchStatus: FetchStatus.Idle,
   currentOffer: null,
   otherOffers: [],
+};
+
+const replaceOffers = (array: Offers, offer: Offer) => {
+  const index = array.findIndex((item) => item.id === offer.id);
+
+  array = [
+    ...array.slice(0, index),
+    offer,
+    ...array.slice(index + 1),
+  ];
+
+  return array;
 };
 
 export const fetchHotels = createAsyncThunk<Offer[], undefined, {
@@ -101,6 +114,13 @@ const offersProcess = createSlice({
       })
       .addCase(fetchOtherOffers.fulfilled, (state, action) => {
         state.otherOffers = action.payload;
+      })
+      .addCase(postFavoriteStatus.fulfilled, (state, action) => {
+        if (state.currentOffer?.id === action.payload.id) {
+          state.currentOffer = action.payload;
+        }
+        state.offersData = replaceOffers(state.offersData, action.payload);
+        state.otherOffers = replaceOffers(state.otherOffers, action.payload);
       });
   },
 });

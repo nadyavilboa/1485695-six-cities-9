@@ -18,6 +18,6 @@ export const otherOffers = (state: State) => selectOffersState(state).otherOffer
 export const selectCurrentOffers = createSelector(
   [selectCity, selectSort, selectOffers],
   (city, sort, offers) => {
-    offers.filter((offer: Offer) => offer.city.name === city);
-    return sortOffers(sort, offers);
+    const filteredOffers = offers.filter((offer: Offer) => offer.city.name === city);
+    return sortOffers(sort, filteredOffers);
   });

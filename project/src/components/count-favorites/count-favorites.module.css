@@ -1,0 +1,10 @@
+.headerСountFavorites {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.amountValueFavorites {
+  margin-right: 5px;
+}

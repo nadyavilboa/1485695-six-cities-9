@@ -50,6 +50,7 @@ export enum NameSpace {
   Comments = 'COMMENTS',
   App = 'APP',
   User = 'USER',
+  Favorites = 'FAVORITES',
 }
 
 export enum FetchStatus {

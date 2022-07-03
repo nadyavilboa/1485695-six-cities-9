@@ -4,6 +4,7 @@ import SignOut from '../sign-out/sign-out';
 import {useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../const';
 import {checkAuthStatus, userData} from '../../store/user-process/selectors';
+import CountFavorites from '../count-favorites/count-favorites';
 
 type NavContainerProps = {
   className: string;
@@ -16,10 +17,6 @@ function NavContainer({className}: NavContainerProps): JSX.Element {
   const userInfo = useAppSelector(userData);
 
   const isAuth = authStatus === AuthorizationStatus.Auth;
-  // eslint-disable-next-line no-console
-  console.log(isAuth);
-  // eslint-disable-next-line no-console
-  console.log(userInfo);
 
   const avatarUrl = isAuth && userInfo?.avatarUrl ? userInfo.avatarUrl : DEFAULT_AVATAR_URL;
 
@@ -28,6 +25,7 @@ function NavContainer({className}: NavContainerProps): JSX.Element {
       <ul className="header__nav-list">
         <li className="header__nav-item user">
           <Link to={isAuth ? AppRoute.Favorites : AppRoute.SignIn} className="header__nav-link header__nav-link--profile">
+            {isAuth && <CountFavorites/>}
             <div
               className="header__avatar-wrapper user__avatar-wrapper"
               style={{backgroundImage: `url(${avatarUrl})`}}
